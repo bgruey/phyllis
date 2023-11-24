@@ -1,3 +1,16 @@
+# executables
+*.x
+# valgrind output
+valgrind-out.txt
+# data files
+*.dat
+*.csv
+*.wav
+# python env
+venv/
+
+
+
 # Prerequisites
 *.d
 
