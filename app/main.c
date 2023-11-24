@@ -1,3 +1,14 @@
+/*
+    main.c
+
+    Description for main.c
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #define _POSIX_C_SOURCE 200809L
 
 #include <stdio.h>

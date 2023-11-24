@@ -1,3 +1,14 @@
+/*
+    now.h
+
+    Description for now.h
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #ifndef _NOW_H
 #define _NOW_H
 

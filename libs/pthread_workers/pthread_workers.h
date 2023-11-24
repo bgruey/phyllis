@@ -1,3 +1,14 @@
+/*
+    pthread_workers.h
+
+    Description for pthread_workers.h
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #ifndef _PTHREAD_WORKERS_H
 #define _PTHREAD_WORKERS_H
 

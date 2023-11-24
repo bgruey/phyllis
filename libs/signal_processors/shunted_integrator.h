@@ -1,3 +1,14 @@
+/*
+    shunted_integrator.h
+
+    Description for shunted_integrator.h
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #ifndef _SHUNTED_INTEGRATOR_H
 #define _SHUNTED_INTEGRATOR_H
 

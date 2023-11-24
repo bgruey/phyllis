@@ -1,3 +1,14 @@
+/*
+    dancer.h
+
+    Description for dancer.h
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #ifndef _DANCER_H
 #define _DANCER_H
 

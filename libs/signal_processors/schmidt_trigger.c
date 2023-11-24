@@ -1,3 +1,14 @@
+/*
+    schmidt_trigger.c
+
+    Description for schmidt_trigger.c
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #include "schmidt_trigger.h"
 
 

@@ -1,3 +1,14 @@
+/*
+    pin_reader_test.c
+
+    Description for pin_reader_test.c
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "pthread_workers.h"

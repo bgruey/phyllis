@@ -1,3 +1,14 @@
+/*
+    simple_filters.h
+
+    Description for simple_filters.h
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #ifndef _SIMPLE_FILTERS_H
 #define _SIMPLE_FILTERS_H
 

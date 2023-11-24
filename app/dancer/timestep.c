@@ -1,3 +1,14 @@
+/*
+    timestep.c
+
+    Description for timestep.c
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #include <math.h>
 #include "dancer.h"
 

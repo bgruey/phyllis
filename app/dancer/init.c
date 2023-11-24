@@ -1,3 +1,14 @@
+/*
+    init.c
+
+    Description for init.c
+
+    Author: github.com/bgruey
+
+    License:
+        GNU AFFERO GENERAL PUBLIC LICENSE
+        Version 3, 19 November 2007
+*/
 #include "dancer.h"
 
 
