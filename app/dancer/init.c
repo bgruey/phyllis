@@ -1,9 +1,3 @@
-/*
-
-    Sources:
-        - explicitly joinable, mutex: https://hpc-tutorials.llnl.gov/posix/example_using_cond_vars/
-
-*/
 #include "dancer.h"
 
 
@@ -59,7 +53,6 @@ DancerState_t* initialize_dancer(
     DancerState_t* dancer = (DancerState_t*)calloc(1, sizeof(DancerState_t));
 
     dancer->now = (TimeWFloat_t*)calloc(1, sizeof(TimeWFloat_t));
-    dancer->move_state = (MoveSignalState_t*)calloc(1, sizeof(MoveSignalState_t));
     dancer->num_read_pins = num_read_pins;
     dancer->num_write_pins = num_write_pins;
     dancer->len_buffer = len_buffer;
@@ -85,6 +78,10 @@ DancerState_t* initialize_dancer(
 
     dancer->start_time_seconds = get_now_seconds(dancer->now);
 
+    /*
+        explicitly joinable, mutex:
+            https://hpc-tutorials.llnl.gov/posix/example_using_cond_vars/
+    */
     dancer->read_now = 0;
     pthread_mutex_init(&dancer->read_now_mutex, NULL);
     pthread_cond_init(&dancer->read_now_cond, NULL);

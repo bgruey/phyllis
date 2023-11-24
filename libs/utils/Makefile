@@ -16,4 +16,4 @@ libutils.so: $(objfiles)
 
 .PHONY: clean
 clean:
->   rm -f *.o libpuppet.so;
+>   rm -f libsigproc.so;

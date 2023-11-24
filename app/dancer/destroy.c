@@ -12,7 +12,6 @@ void destroy_dancer(DancerState_t* dancer) {
     fprintf(stderr, "Threads joined\n");
 
     free(dancer->now);
-    free(dancer->move_state);
 
     free(dancer->read_pins);
     free(dancer->write_pins);

@@ -1,17 +1,18 @@
-#ifndef DANCER_H
-#define DANCER_H
-/*
-    Program state.
-*/
+#ifndef _DANCER_H
+#define _DANCER_H
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
-#include "../../libs/utils"
-#include "../../libs/pthread_workers/pin_thread.h"
+
+#include "signal_processors.h"
+#include "pthread_workers.h"
+#include "utils.h"
+
 
 typedef struct {
     TimeWFloat_t* now;
     double start_time_seconds;
-    MoveSignalState_t* move_state;
 
     unsigned short num_read_pins;
     unsigned short read_pin_i;

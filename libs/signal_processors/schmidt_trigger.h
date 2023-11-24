@@ -2,9 +2,13 @@
 #define _SCHMIDT_TRIGGER_H
 
 #include <stdlib.h>
-#include <stdio.h>
 
 
+/**
+ * @brief Definition of the Schmidt Trigger:
+ *        https://en.wikipedia.org/wiki/Schmitt_trigger#Non-inverting_Schmitt_trigger
+ * 
+ */
 typedef struct {
     int high; //  boolean, stores state
     double threshold_high;
@@ -12,6 +16,7 @@ typedef struct {
     double value_high;
     double value_low;
 } SchmidtTrigger_T;
+
 
 /**
  * @brief Initialize data for the Schmidt Trigger.
@@ -29,8 +34,9 @@ SchmidtTrigger_T* schmtt_init(
     double value_low
 );
 
+
 /**
- * @brief Calculate Schmidt Trigger output with y input.
+ * @brief Calculate Schmidt Trigger output with y input and state ts.
  * 
  * @param y 
  * @param ts 

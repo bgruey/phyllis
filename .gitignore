@@ -1,3 +1,7 @@
+# Folders for build
+libs/lib
+libs/inc
+
 # executables
 *.x
 # valgrind output
@@ -8,6 +12,8 @@ valgrind-out.txt
 *.wav
 # python env
 venv/
+# vs code
+.vscode
 
 
 

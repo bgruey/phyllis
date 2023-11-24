@@ -1,9 +1,9 @@
 #include <math.h>
 #include "dancer.h"
-#include "signal_processors.h"
 
 #define LOW_PASS_F 50.0
 #define M_PI 3.14159265358979323846
+
 
 void step_forward_buffer(DancerState_t* dancer) {
     /*

@@ -1,10 +1,9 @@
 #ifndef _NOW_H
 #define _NOW_H
 
-#define _POSIX_C_SOURCE 200809L
-
 #include <time.h>
 
+#define _POSIX_C_SOURCE 200809L
 #define TO_NS_DECIMAL 1.0e-9
 
 
@@ -23,6 +22,7 @@ typedef struct TimeWFloat_t {
  */
 double get_now_seconds(TimeWFloat_t* now);
 
+
 /**
  * @brief Update the now object and return get_seconds_fraction.
  * 
@@ -31,6 +31,7 @@ double get_now_seconds(TimeWFloat_t* now);
  * @return double 
  */
 double get_now_seconds_fraction(TimeWFloat_t* now, double max_window);
+
 
 /**
  * @brief Return the fractional part of now within the max_window.

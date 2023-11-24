@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 #include "dancer/dancer.h"
-#include "../libs/utills/sleep.h"
+#include "sleep.h"
 
 int main(int argc, char** argv) {
     int num_points = 301;

@@ -1,18 +1,46 @@
-# Make the Dancer Library!
+# Build Puppet Program
 .RECIPEPREFIX = >
 CC=/usr/bin/gcc
-CFLAGS=-g -O0 -shared -fPIC -ggdb3 -Wall
+CFLAGS=-g -O0 -ggdb3 -Wall -I../libs/inc
 LD=/usr/bin/ld
-LDFLAGS=-shared -fPIC -L../libs -lpinthreads
+LDFLAGS=-L../libs/lib -lpthread_workers -lsignal_processors -lutils -lm -L./dancer -ldancer
+export LD_LIBRARY_PATH=../libs/lib:dancer
 
-srcfiles = $(wildcard *.c)
-objfiles = $(srcfiles:.c=.o)
+default: build
 
-default: libdancer.so
 
-libdancer.so: $(objfiles)
->   $(LD) $(LDFLAGS) -o $@ $^;
+
+
+test2: build
+>       gdb ./puppet.x
+
+test: clean build
+>	valgrind --leak-check=full \
+                --show-leak-kinds=all \
+                --verbose \
+                --log-file=valgrind-out.txt \
+                --track-origins=yes \
+                --num-callers=10 \
+                ./puppet.x
+
+run: build
+>       ./puppet.x
+
+build: dancer 
+>	$(CC) $(CFLAGS) -o puppet.x main.c $(LDFLAGS)
+
+dancer: libs
+>       @echo ""
+>       @echo "Building dancer"
+>       $(MAKE) -C dancer
+
+libs:
+>       @echo ""
+>       @echo "Building ../libs"
+>       $(MAKE) -C ../libs
 
 .PHONY: clean
 clean:
->   rm -f *.o libdancer.so;
+>	rm -f *.x
+>	$(MAKE) clean -C ../libs
+>	$(MAKE) clean -C dancer

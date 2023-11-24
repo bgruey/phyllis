@@ -5,7 +5,8 @@
 /**
  * @brief Step forward y_int in a shunted integrator.
  * 
- * @note General idea: https://en.wikipedia.org/wiki/Op_amp_integrator#Practical_circuit
+ * @note General idea:
+ *       https://en.wikipedia.org/wiki/Op_amp_integrator#Practical_circuit
  * 
  * @param y_int 
  * @param y 

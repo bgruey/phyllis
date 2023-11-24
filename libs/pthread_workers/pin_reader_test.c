@@ -1,8 +1,6 @@
-/*
-    Placeholder, read data from pins (create for now)
-*/
 #include <stdio.h>
-#include "pin_thread.h"
+#include <stdlib.h>
+#include "pthread_workers.h"
 
 
 size_t read_sample(

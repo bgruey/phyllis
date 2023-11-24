@@ -3,16 +3,18 @@
 CC=/usr/bin/gcc
 CFLAGS=-g -O0 -shared -fPIC -ggdb3 -Wall
 LD=/usr/bin/ld
-LDFLAGS=-shared -fPIC -L../base_puppet -lpuppet
+LDFLAGS=-shared -fPIC
 
 srcfiles = $(wildcard *.c)
 objfiles = $(srcfiles:.c=.o)
+target = libpthread_workers.so
 
-default: libpinthreads.so
+default: $(target)
 
-libpinthreads.so: $(objfiles)
+$(target): $(objfiles)
 >   $(LD) $(LDFLAGS) -o $@ $^;
+>	rm -f *.o
 
 .PHONY: clean
 clean:
->   rm -f *.o libpinthreads.so;
+>   rm -f $(target);

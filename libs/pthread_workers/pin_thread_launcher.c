@@ -1,5 +1,4 @@
-
-#include "pin_thread.h"
+#include "pthread_workers.h"
 
 
 int launch_pin_thread(
