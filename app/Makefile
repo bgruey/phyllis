@@ -6,7 +6,7 @@ LD=/usr/bin/ld
 LDFLAGS=-L../libs/lib -lpthread_workers -lsignal_processors -lutils -lm -L./dancer -ldancer
 export LD_LIBRARY_PATH=../libs/lib:dancer
 
-default: build
+default: test
 
 
 
@@ -40,6 +40,7 @@ libs:
 >       $(MAKE) -C ../libs
 
 .PHONY: clean
+
 clean:
 >	rm -f *.x
 >	$(MAKE) clean -C ../libs
