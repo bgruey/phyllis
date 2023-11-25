@@ -14,6 +14,8 @@
 
 #include <stdlib.h>
 
+#include "now.h"
+
 
 /**
  * @brief Definition of the Schmidt Trigger:
@@ -26,6 +28,9 @@ typedef struct {
     double threshold_low;
     double value_high;
     double value_low;
+
+    TimeWFloat_t now_data;
+    double start_high;
 } SchmidtTrigger_T;
 
 
