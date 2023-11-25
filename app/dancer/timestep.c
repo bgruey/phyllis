@@ -75,13 +75,13 @@ void step_forward_buffer(DancerState_t* dancer) {
         );
     }
 
-    if(dancer->read_pins[5] > 0.01)  // Schmidt Trigger signal is 0.4 for high.
+    if(dancer->read_pins[5] > 0.02)  // Schmidt Trigger signal is 0.4 for high.
         write_pin_high(PIN4);
     else
         write_pin_low(PIN4);
 
     set_line_buffer_with_state(dancer);
-
+    printf("%s\n", dancer->line_buffer);
     fprintf(
         dancer->outfile,
         "%s\n",
