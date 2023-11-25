@@ -22,15 +22,15 @@ size_t read_sample(
     double time
 ) {
     // current time
-    pins[2] = time;
+    pins[0] = time;
 
     // kick
-    size_t nread = fread(&pins[0], __SIZEOF_DOUBLE__, 1, kick_file);
+    size_t nread = fread(&pins[1], __SIZEOF_DOUBLE__, 1, kick_file);
     if (nread != 1)
         return 0;
 
     // snare
-    nread += fread(&pins[1], __SIZEOF_DOUBLE__, 1, snare_file);
+    nread += fread(&pins[2], __SIZEOF_DOUBLE__, 1, snare_file);
     if (nread != 2)
         return 0;
     //printf("%f: %f, %f\n", pins[0], pins[1], pins[2]);
@@ -99,7 +99,7 @@ void* pin_reader_test(void* args_in) {
             t += args->dt
         );
 
-        for (i = 0; i < args->num_pins; i++) {
+        for (i = 0; i < 2; i++) {
             args->pins[3 + i] = shunted_integrator(
                 prev_pins[i + 1],
                 args->pins[i + 1],
