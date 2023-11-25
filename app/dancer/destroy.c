@@ -41,6 +41,7 @@ void destroy_dancer(DancerState_t* dancer) {
     pthread_cond_destroy(&dancer->read_now_cond);
 
     free(dancer->pin_reader_thread_data);
+    free(dancer->pin_writer_thread_data->writer_pwm_data);
     free(dancer->pin_writer_thread_data);
 
     free(dancer);

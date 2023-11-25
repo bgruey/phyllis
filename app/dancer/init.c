@@ -99,10 +99,10 @@ DancerState_t* initialize_dancer(
     dancer->pin_writer_thread_data->writer_pwm_data->period_seconds = 0.02;
     dancer->pin_writer_thread_data->writer_pwm_data->duty_cycle_percent = 0.25;
 
-    dancer->pin_writer_thread_data = init_pin_thread(
-        dancer,
-        dancer->num_write_pins,
-        dancer->write_pins,
+
+    launch_pin_thread(
+        &dancer->pthread_attr,
+        dancer->pin_writer_thread_data,
         pin_writer
     );
 
