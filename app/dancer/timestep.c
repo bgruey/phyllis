@@ -21,16 +21,14 @@ void set_line_buffer_with_state(DancerState_t* dancer) {
     double* state = get_next_state(dancer);
     sprintf(
         dancer->line_buffer,
-        "%.13e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e\n",
+        "%.13e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e\n",
         state[0],
         state[1],
         state[2],
         state[3],
         state[4],
         state[5],
-        state[6],
-        state[7],
-        state[8]
+        state[6]
     );
 }
 
@@ -77,7 +75,7 @@ void step_forward_buffer(DancerState_t* dancer) {
         write_pin_low(PIN4);
 
     set_line_buffer_with_state(dancer);
-    printf("%s\n", dancer->line_buffer);
+    // printf("%s\n", dancer->line_buffer);
     fprintf(
         dancer->outfile,
         "%s\n",
