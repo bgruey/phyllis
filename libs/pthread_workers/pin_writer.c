@@ -29,7 +29,6 @@ void* pin_writer(void* args_in) {
     }
     bcm2835_gpio_fsel(PIN4, BCM2835_GPIO_FSEL_OUTP);
 
-    printf("Starting to run pwm on pin.\n");
     run_pwm_on_pin(pwm_data, &args->run_bool, PIN4);
     
     return NULL;
