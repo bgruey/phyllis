@@ -21,7 +21,7 @@ libpthread_workers.so: libutils.so libsignal_processors.so
 >   mv pthread_workers/$@ ./lib/$@
 >   cp pthread_workers/*.h inc/
 
-libsignal_processors.so:
+libsignal_processors.so: libutils.so
 >	@echo ""
 >   @echo "Building $@"
 >   $(MAKE) -C signal_processors
