@@ -11,6 +11,7 @@
 */
 #include <math.h>
 #include "dancer.h"
+#include "pinio.h"
 
 #define LOW_PASS_F 50.0
 #define M_PI 3.14159265358979323846
@@ -73,13 +74,11 @@ void step_forward_buffer(DancerState_t* dancer) {
             dancer->read_pins[dancer->read_pin_i]
         );
     }
-    dancer->len_line += sprintf(
-        dancer->line_buffer + dancer->len_line,
-        "%.13e,%.5e,%.5e,",
-        get_next_state(dancer)[2],  // time
-        get_next_state(dancer)[0],  // kick signal
-        get_next_state(dancer)[1]  // snare signal
-    );
+
+    if(dancer->read_pins[5] > 0.01)  // Schmidt Trigger signal is 0.4 for high.
+        write_pin_high(PIN4);
+    else
+        write_pin_low(PIN4);
 
     set_line_buffer_with_state(dancer);
 

@@ -3,7 +3,9 @@
 CC=/usr/bin/gcc
 CFLAGS=-g -O0 -ggdb3 -Wall -I../libs/inc
 LD=/usr/bin/ld
-LDFLAGS=-L../libs/lib -lpthread_workers -lsignal_processors -lutils -lm -L./dancer -ldancer
+LDFLAGS=-lm -lbcm2835 \
+        -L../libs/lib -lpinio -lpthread_workers -lsignal_processors -lutils \
+        -L./dancer -ldancer
 export LD_LIBRARY_PATH=../libs/lib:dancer
 
 default: test

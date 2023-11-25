@@ -10,6 +10,7 @@
         Version 3, 19 November 2007
 */
 #include "dancer.h"
+#include "pinio.h"
 
 
 PinThreadData_t* init_pin_thread(
@@ -114,5 +115,12 @@ DancerState_t* initialize_dancer(
         pin_writer
     );
 
+    // initalize bcm2835 library and set pin4 to output.
+    if(!bcm2835_init()) {
+        fprintf(stderr, "Failed to init bcm2835.\n");
+        exit(EXIT_FAILURE);
+    }
+    bcm2835_gpio_fsel(PIN4, BCM2835_GPIO_FSEL_OUTP);
+        
     return dancer;
 }
