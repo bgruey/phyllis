@@ -14,7 +14,7 @@
 
 double schmtt_calculate(double y, SchmidtTrigger_T* ts) {
 
-    if (get_now_seconds(&ts->now_data) - ts->start_high < 0.5) {
+    if (get_now_seconds(&ts->now_data) - ts->start_high < 0.05) {
         ts->high = 0;
         return ts->value_high;
     }

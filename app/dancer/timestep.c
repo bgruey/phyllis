@@ -71,7 +71,7 @@ void step_forward_buffer(DancerState_t* dancer) {
 
     if(dancer->read_pins[5] > 0.2) {  // Schmidt Trigger signal is 0.4 for high.
         write_pin_high(PIN4);
-        printf("Triggering gpio high!\n");
+        // printf("Triggering gpio high!\n");
     }
     else
         write_pin_low(PIN4);
