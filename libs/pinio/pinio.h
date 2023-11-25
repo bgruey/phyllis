@@ -30,6 +30,6 @@ void write_pin_high(uint8_t pin);
 void write_pin_low(uint8_t pin);
 
 
-void run_pwm_on_pin(PWMData_t* pwm_data, uint8_t pin);
+void run_pwm_on_pin(PWMData_t* pwm_data, int* run_bool, uint8_t pin);
 
 #endif
