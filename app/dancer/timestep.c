@@ -53,8 +53,6 @@ void step_forward_buffer(DancerState_t* dancer) {
     */
 
     get_now_seconds_fraction(dancer->now, 0.5);
-    double alpha;
-
 
     dancer->next_buffer_i = (dancer->buffer_i + 1) % dancer->len_buffer;
     dancer->read_now = 1;
@@ -66,8 +64,6 @@ void step_forward_buffer(DancerState_t* dancer) {
     dancer->line_buffer[0] = '\0';
     dancer->len_line = 0;
 
-    alpha = LOW_PASS_F * 2 * M_PI * dancer->pin_reader_thread_data->dt;
-    alpha = alpha / (1.0 + alpha);
     for (dancer->read_pin_i = 0; dancer->read_pin_i < dancer->num_read_pins; dancer->read_pin_i++) {
         set_next_read_pin_state(
             dancer,

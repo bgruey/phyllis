@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
             - Build python plotter instead of libreoffice calc
     */
     DancerState_t* dancer = initialize_dancer(
-        2, 2, 5,
+        7, 2, 5,
         "./data.csv"
     );
 
@@ -42,10 +42,10 @@ int main(int argc, char** argv) {
     while (dancer->pin_reader_thread_data->run_bool && i < num_points) {
         step_forward_buffer(dancer);
 
-        sleep_via_double(0.0001, sleep_data);
+        // sleep_via_double(0.0001, sleep_data);
         if ((i % 10000) == 0)
             printf("%d: now\n", i);
-        i+= 1;
+        i += 1;
     }
 
 
