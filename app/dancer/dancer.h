@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+#include <bcm2835.h>
+
 #include "signal_processors.h"
 #include "pthread_workers.h"
 #include "utils.h"
