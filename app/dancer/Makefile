@@ -1,9 +1,10 @@
 # Make the Dancer Library!
 .RECIPEPREFIX = >
 CC=/usr/bin/gcc
-CFLAGS=-g -O0 -shared -fPIC -ggdb3 -Wall -I../../libs/inc
+CFLAGS=-g -O0 -shared -fPIC -ggdb3 -Wall -I/usr/local/include -I../../libs/inc
 LD=/usr/bin/ld
-LDFLAGS=-shared -fPIC -lbcm2835 \
+LDFLAGS=-shared -fPIC \
+		-L/usr/local/lib -lbcm2835 \
 		-L../../libs/lib -lpinio  -lpthread_workers -lsignal_processors -lutils
 
 srcfiles = $(wildcard *.c)

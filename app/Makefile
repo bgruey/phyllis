@@ -1,20 +1,15 @@
 # Build Puppet Program
 .RECIPEPREFIX = >
 CC=/usr/bin/gcc
-CFLAGS=-g -O0 -ggdb3 -Wall -I../libs/inc
+CFLAGS=-g -O0 -ggdb3 -Wall -I/usr/local/include -I../libs/inc
 LD=/usr/bin/ld
-LDFLAGS=-lm -lbcm2835 \
+LDFLAGS=-lm \
+        -L/usr/local/lib -lbcm2835 \
         -L../libs/lib -lpinio -lpthread_workers -lsignal_processors -lutils \
         -L./dancer -ldancer
 export LD_LIBRARY_PATH=../libs/lib:dancer
 
 default: test
-
-
-
-
-test2: build
->       gdb ./puppet.x
 
 test: clean build
 >	valgrind --leak-check=full \
