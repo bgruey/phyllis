@@ -3,7 +3,7 @@
 CC=/usr/bin/gcc
 CFLAGS=-g -O0 -shared -fPIC -ggdb3 -Wall -I../inc
 LD=/usr/bin/ld
-LDFLAGS=-shared -fPIC -L../lib -lbcm2835
+LDFLAGS=-shared -fPIC -L../lib -lbcm2835 -lutils
 
 srcfiles = $(wildcard *.c)
 objfiles = $(srcfiles:.c=.o)

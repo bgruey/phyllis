@@ -14,8 +14,10 @@
 
 #include <pthread.h>
 
+#include "pinio.h"
 
-typedef struct {
+
+typedef struct pin_thread_data_t {
     unsigned short num_pins;
     double* pins;
     int run_bool;
@@ -24,6 +26,7 @@ typedef struct {
     pthread_cond_t* read_now_cond;
     int* read_now;
     double dt; // timestep for reader in testing.
+    PWMData_t* writer_pwm_data;
 } PinThreadData_t;
 
 
