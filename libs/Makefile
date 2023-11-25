@@ -3,18 +3,18 @@
 
 default: build
 
-build: libpthread_workers.so libsignal_procesors.so libutils.so
+build: libpthread_workers.so libsignal_processors.so libutils.so
 >	@echo ""
 >	@echo "Finished building."
 
-libpthread_workers.so: libutils.so
+libpthread_workers.so: libutils.so libsignal_processors.so
 >   @echo ""
 >   @echo "Building $@"
 >	$(MAKE) -C pthread_workers
 >   mv pthread_workers/$@ ./lib/$@
 >   cp pthread_workers/*.h inc/
 
-libsignal_procesors.so:
+libsignal_processors.so:
 >	@echo ""
 >   @echo "Building $@"
 >   $(MAKE) -C signal_processors

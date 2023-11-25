@@ -16,6 +16,24 @@
 #define M_PI 3.14159265358979323846
 
 
+void set_line_buffer_with_state(DancerState_t* dancer) {
+    double* state = get_next_state(dancer);
+    sprintf(
+        dancer->line_buffer,
+        "%.13e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e,%.5e\n",
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        state[4],
+        state[5],
+        state[6],
+        state[7],
+        state[8]
+    );
+}
+
+
 void step_forward_buffer(DancerState_t* dancer) {
     /*
         Current means the time step that was last completed.
@@ -63,27 +81,7 @@ void step_forward_buffer(DancerState_t* dancer) {
         get_next_state(dancer)[1]  // snare signal
     );
 
-    for (dancer->write_pin_i = 0; dancer->write_pin_i < dancer->num_write_pins; dancer->write_pin_i++) {
-        get_next_state(dancer)[dancer->num_read_pins + dancer->write_pin_i] = shunted_integrator(
-                get_current_state(dancer)[dancer->num_read_pins + dancer->write_pin_i],  // Current integral
-                get_next_state(dancer)[dancer->write_pin_i],  // add 1 to skip over time value
-                dancer->pin_reader_thread_data->dt,
-                100.0  // lambda, decays to 1/e 100 times per second.
-        );
-
-        get_next_state(dancer)[dancer->num_read_pins + dancer->num_write_pins + dancer->write_pin_i] = schmtt_calculate(
-            get_next_state(dancer)[dancer->num_read_pins + dancer->write_pin_i],
-            dancer->schmidt_triggers[dancer->write_pin_i]
-        );
-    }
-    dancer->len_line += sprintf(
-        dancer->line_buffer + dancer->len_line,
-        "%.5e,%.5e,%.5e,%.5e",  // kick integral, kick schmidt, snare integral, snare schmidt
-        get_next_state(dancer)[dancer->num_read_pins],
-        get_next_state(dancer)[dancer->num_read_pins + dancer->num_write_pins],
-        get_next_state(dancer)[dancer->num_read_pins + 1],
-        get_next_state(dancer)[dancer->num_read_pins + dancer->num_write_pins + 1]
-    );
+    set_line_buffer_with_state(dancer);
 
     fprintf(
         dancer->outfile,

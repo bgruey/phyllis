@@ -43,9 +43,5 @@ void destroy_dancer(DancerState_t* dancer) {
     free(dancer->pin_reader_thread_data);
     free(dancer->pin_writer_thread_data);
 
-    for (i = 0; i < dancer->num_write_pins; i++)
-        free(dancer->schmidt_triggers[i]);
-    free(dancer->schmidt_triggers);
-
     free(dancer);
 }

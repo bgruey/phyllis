@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pthread_workers.h"
+#include "signal_processors.h"
 
 
 size_t read_sample(
@@ -58,10 +59,24 @@ double get_timestep(FILE* kick, FILE* snare) {
 
 
 void* pin_reader_test(void* args_in) {
-    PinThreadData_t* args = (PinThreadData_t*)args_in; 
+    /*
+        pin data:
+            0: time
+            1: kick signal (abs by python preprocess)
+            2: snare signal ( ... )
+            3: kick shunted integral
+            4: snare shinted integral
+            5: kick Schmidt Trigger
+            6: snare Schmidt Trigger
+    */
+    int i = 0;
+    PinThreadData_t* args = (PinThreadData_t*)args_in;
+    double* prev_pins = (double*)calloc(args->num_pins, sizeof(double));
 
     FILE* kick_file = fopen("kick5k.dat", "rb");
     FILE* snare_file = fopen("snare5k.dat", "rb");
+
+    SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
     args->dt = get_timestep(kick_file, snare_file);
     double t = 0.0;
@@ -74,6 +89,8 @@ void* pin_reader_test(void* args_in) {
         while(args->read_now[0] == 0 && args->run_bool)
             pthread_cond_wait(args->read_now_cond, args->read_now_mutex);
 
+        for (i = 0; i < args->num_pins; i++)
+            prev_pins[i] = args->pins[i];
 
         num_read = read_sample(
             kick_file, 
@@ -82,6 +99,19 @@ void* pin_reader_test(void* args_in) {
             t += args->dt
         );
 
+        for (i = 0; i < args->num_pins; i++) {
+            args->pins[3 + i] = shunted_integrator(
+                prev_pins[i + 1],
+                args->pins[i + 1],
+                args->dt,
+                100.0  // lambda
+            );
+            args->pins[5 + i] = schmtt_calculate(
+                args->pins[3 + i],
+                schmidt_data
+            );
+        }
+        
         args->read_now[0] = 0;
 
         pthread_mutex_unlock(args->read_now_mutex);

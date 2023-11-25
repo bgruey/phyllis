@@ -114,14 +114,5 @@ DancerState_t* initialize_dancer(
         pin_writer
     );
 
-    dancer->schmidt_triggers = (SchmidtTrigger_T**)calloc(
-        dancer->num_write_pins, 
-        sizeof(SchmidtTrigger_T*)
-    );
-    for(i = 0; i < dancer->num_write_pins; i++)
-        dancer->schmidt_triggers[i] = schmtt_init(
-            0.4, 0.1, 0.4, 0.05
-        );
-
     return dancer;
 }

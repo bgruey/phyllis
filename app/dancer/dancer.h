@@ -50,8 +50,6 @@ typedef struct {
 
     PinThreadData_t* pin_reader_thread_data;
     PinThreadData_t* pin_writer_thread_data;
-
-    SchmidtTrigger_T** schmidt_triggers;
 } DancerState_t;
 
 
