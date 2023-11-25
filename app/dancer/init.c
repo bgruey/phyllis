@@ -47,20 +47,6 @@ DancerState_t* initialize_dancer(
     unsigned short len_buffer,
     const char* out_filename
 ) {
-    if (num_read_pins != num_write_pins) {
-        fprintf(
-            stderr,
-            "ERROR: Mismatched number of pins. Read and write must match.\n"
-        );
-        exit(EXIT_FAILURE);
-    }
-    if (len_buffer < 2) {
-        fprintf(
-            stderr,
-            "ERROR: Buffer length less than 2.\n"
-        );
-        exit(EXIT_FAILURE);
-    }
 
     DancerState_t* dancer = (DancerState_t*)calloc(1, sizeof(DancerState_t));
 
