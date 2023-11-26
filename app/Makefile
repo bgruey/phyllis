@@ -11,7 +11,7 @@ export LD_LIBRARY_PATH=../libs/lib:dancer
 
 default: test
 
-test: clean build
+test: clean build 
 >	valgrind --leak-check=full \
                 --show-leak-kinds=all \
                 --verbose \

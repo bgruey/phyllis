@@ -73,8 +73,8 @@ void* pin_reader_test(void* args_in) {
     PinThreadData_t* args = (PinThreadData_t*)args_in;
     double* prev_pins = (double*)calloc(args->num_pins, sizeof(double));
 
-    FILE* kick_file = fopen("kick5k.dat", "rb");
-    FILE* snare_file = fopen("snare5k.dat", "rb");
+    FILE* kick_file = fopen("pukkin-kick.dat", "rb");
+    FILE* snare_file = fopen("pukkin-snare.dat", "rb");
 
     SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
