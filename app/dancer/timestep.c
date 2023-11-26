@@ -54,10 +54,10 @@ void step_forward_buffer(DancerState_t* dancer) {
 
     dancer->next_buffer_i = (dancer->buffer_i + 1) % dancer->len_buffer;
     dancer->read_now = 1;
-    pthread_cond_signal(&dancer->read_now_cond);
-    pthread_mutex_lock(&dancer->read_now_mutex);
-    while(dancer->read_now == 1 && dancer->pin_reader_thread_data->run_bool)
-        pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
+    // pthread_cond_signal(&dancer->read_now_cond);
+    // pthread_mutex_lock(&dancer->read_now_mutex);
+    // while(dancer->read_now == 1 && dancer->pin_reader_thread_data->run_bool)
+    //     pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
 
     dancer->line_buffer[0] = '\0';
     dancer->len_line = 0;
@@ -85,5 +85,5 @@ void step_forward_buffer(DancerState_t* dancer) {
     );
 
     dancer->buffer_i = dancer->next_buffer_i;
-    pthread_mutex_unlock(&dancer->read_now_mutex);  
+    // pthread_mutex_unlock(&dancer->read_now_mutex);  
 }

@@ -11,7 +11,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 audio_in = sys.argv[1]
-data, sample_rate = librosa.load(audio_in, sr=5000)
+data, sample_rate = librosa.load(audio_in, sr = None)  # , sr=5000)
 
 dt = 1.0 / sample_rate
 

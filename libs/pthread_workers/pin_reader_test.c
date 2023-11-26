@@ -80,14 +80,23 @@ void* pin_reader_test(void* args_in) {
 
     args->dt = get_timestep(kick_file, snare_file);
     double t = 0.0;
-    
+    TimeWFloat_t sleep_data;
+    sleep_data.start_time_seconds = get_now_seconds(&sleep_data);
+    double early_s;
+
     size_t num_read = read_sample(kick_file, snare_file, args->pins, t);
 
     while (args->run_bool && num_read == 2) {
-        pthread_mutex_lock(args->read_now_mutex);
 
-        while(args->read_now[0] == 0 && args->run_bool)
-            pthread_cond_wait(args->read_now_cond, args->read_now_mutex);
+        early_s = t - (sleep_data.seconds - sleep_data.start_time_seconds);
+        if (early_s > 0)
+            sleep_via_double(early_s, &sleep_data.now);
+
+
+        // pthread_mutex_lock(args->read_now_mutex);
+
+        // while(args->read_now[0] == 0 && args->run_bool)
+        //     pthread_cond_wait(args->read_now_cond, args->read_now_mutex);
 
         for (i = 0; i < args->num_pins; i++)
             prev_pins[i] = args->pins[i];
@@ -112,10 +121,10 @@ void* pin_reader_test(void* args_in) {
             );
         }
         
-        args->read_now[0] = 0;
+        // args->read_now[0] = 0;
 
-        pthread_mutex_unlock(args->read_now_mutex);
-        pthread_cond_signal(args->read_now_cond);
+        // pthread_mutex_unlock(args->read_now_mutex);
+        // pthread_cond_signal(args->read_now_cond);
     }
 
     args->run_bool = 0;

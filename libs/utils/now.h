@@ -12,12 +12,16 @@
 #ifndef _NOW_H
 #define _NOW_H
 
+// For clock macros in clock_gettime in time.h
+#define _POSIX_C_SOURCE 200809L
 #include <time.h>
 
-#define _POSIX_C_SOURCE 200809L
 #define TO_NS_DECIMAL 1.0e-9
 
-
+/**
+ * @brief Wrapper for timespec (time.h) plus seconds and start_time_seconds doubles.
+ * 
+ */
 typedef struct TimeWFloat_t {
     struct timespec now;
     double seconds;
