@@ -77,7 +77,7 @@ void* pin_reader_test(void* args_in) {
         );
         exit(EXIT_FAILURE);
     }
-    kick_len = 1000;
+
     double** output_buffer = (double**)calloc(kick_len, sizeof(double*));
     int i;
     for (i = 0; i < kick_len; i++)
@@ -142,14 +142,20 @@ void* pin_reader_test(void* args_in) {
     }
 
     
-    FILE* outfile = fopen("test_out.dat", "wb");
-    for (data_i = 0; data_i < kick_len; data_i++)
+    FILE* outfile = fopen("test_out.csv", "w");
+    fprintf(
+        outfile,
+        "time, slept dt, kick, snare, kick integral, snare integral, kick schmidt, snare schmidt\n"
+    );
+    for (data_i = 0; data_i < kick_len; data_i++) {
         for (pin_i = 0; pin_i < args->num_pins; pin_i++) 
             fprintf(
                 outfile,
-                "%f",
+                "%f, ",
                 output_buffer[data_i][pin_i]
             );
+        fprintf(outfile, "\n");
+    }
 
     fclose(outfile);
     args->run_bool = 0;
