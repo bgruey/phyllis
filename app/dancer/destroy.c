@@ -16,8 +16,8 @@ void destroy_dancer(DancerState_t* dancer) {
     dancer->pin_reader_thread_data->run_bool = 0;
     dancer->pin_writer_thread_data->run_bool = 0;
     fprintf(stderr, "Sending read now cond signal pthread in dancer/destroy.c\n");
-    pthread_mutex_unlock(&dancer->read_now_mutex);
-    pthread_cond_signal(&dancer->read_now_cond);
+    // pthread_mutex_unlock(&dancer->read_now_mutex);
+    // pthread_cond_signal(&dancer->read_now_cond);
     pthread_join(dancer->pin_reader_thread_data->thread, NULL);
     pthread_join(dancer->pin_writer_thread_data->thread, NULL);
     fprintf(stderr, "Threads joined\n");
