@@ -15,7 +15,7 @@
 #include "signal_processors.h"
 
 
-void read_data_file(const char* filename, double* buf, size_t* buf_len, int* sample_rate) {
+void read_data_file(const char* filename, double* buf, size_t* buf_len, size_t* sample_rate) {
     FILE* f = fopen(filename, "rb");
 
     fread(sample_rate, __SIZEOF_INT__, 1, f);
@@ -55,7 +55,7 @@ void* pin_reader_test(void* args_in) {
     if (kick_sample_rate != snare_sample_rate) {
         fprintf(
             stderr, 
-            "ERROR: Sample rates mismatch in kick/snare (%d/%d)data!\n",
+            "ERROR: Sample rates mismatch in kick/snare (%ld/%ld)data!\n",
             kick_sample_rate,
             snare_sample_rate
         );
@@ -64,7 +64,7 @@ void* pin_reader_test(void* args_in) {
     if (kick_len != snare_len) {
         fprintf(
             stderr, 
-            "ERROR: Data length mismatch in kick/snare (%d/%d)data!\n",
+            "ERROR: Data length mismatch in kick/snare (%ld/%ld)data!\n",
             kick_len,
             snare_len
         );
@@ -87,6 +87,10 @@ void* pin_reader_test(void* args_in) {
         early_s = t - (sleep_data.seconds - sleep_data.start_time_seconds);
         if (early_s > 0)
             sleep_via_double(early_s, &sleep_data.now);
+
+        args->pins[0] = (t += args->dt);
+        args->pins[1] = kick_data[data_i];
+        args->pins[0] = snare_data[data_i];
 
         for (pin_i = 0; pin_i < args->num_pins; pin_i++)
             prev_pins[pin_i] = args->pins[pin_i];

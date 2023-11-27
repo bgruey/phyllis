@@ -21,7 +21,7 @@
 int main(int argc, char** argv) {
     int num_points = 30000001;
     struct timespec* sleep_data = (struct  timespec*)calloc(1, sizeof(struct timespec));
-    int mp3_proc = system("mpg321 pukkin-drum-and-bass.mp3 &");
+    system("mpg321 pukkin-drum-and-bass.mp3 &");
     /*
         In testing, channel definitions:
             0: time
