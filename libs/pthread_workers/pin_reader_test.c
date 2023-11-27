@@ -148,15 +148,22 @@ void* pin_reader_test(void* args_in) {
     FILE* outfile = fopen("test_out.csv", "w");
     fprintf(
         outfile,
-        "time, kick, snare, kick integral, snare integral, kick schmidt, snare schmidt\n"
+        "time,kick,snare,kick_int, snare_int, kick_schmidt, snare_schmidt\n"
     );
+
     for (data_i = 0; data_i < kick_len; data_i++) {
-        for (pin_i = 0; pin_i < args->num_pins; pin_i++) 
+
+        for (pin_i = 0; pin_i < args->num_pins - 1; pin_i++) 
             fprintf(
                 outfile,
-                "%f, ",
+                "%f,",
                 output_buffer[data_i][pin_i]
             );
+        fprintf(
+            outfile,
+            "%f",
+            output_buffer[data_i][pin_i]
+        );
         fprintf(outfile, "\n");
     }
 
