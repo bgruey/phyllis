@@ -108,8 +108,8 @@ void* pin_reader_test(void* args_in) {
             sleep_via_double(early_s, &sleep_data.now);
 
         args->pins[0] = (t += args->dt);
-        args->pins[1] = sleep_data.seconds - sleep_data.start_time_seconds;
-        args->pins[2] = kick_data[data_i];
+        args->pins[1] = sleep_data.seconds;
+        args->pins[2] = sleep_data.start_time_seconds;// kick_data[data_i];
         args->pins[3] = snare_data[data_i];
 
         for (pin_i = 0; pin_i < args->num_pins; pin_i++)
