@@ -19,12 +19,15 @@ void read_data_file(
     const char* filename, 
     double** buf, 
     size_t* buf_len, 
-    size_t* sample_rate
+    size_t* sample_rate,
+    size_t max_len
 ) {
     FILE* f = fopen(filename, "rb");
 
     fread(sample_rate, __SIZEOF_INT__, 1, f);
     fread(buf_len, __SIZEOF_INT__, 1, f);
+    if (buf_len[0] > max_len)
+        buf_len[0] = max_len;
     
     buf[0] = (double*)calloc(buf_len[0], __SIZEOF_DOUBLE__);
     fread(buf[0], __SIZEOF_DOUBLE__, buf_len[0], f);
@@ -56,8 +59,9 @@ void* pin_reader_test(void* args_in) {
     double* snare_data = NULL;
     size_t snare_len, snare_sample_rate;
 
-    read_data_file("pukkin-kick.dat", &kick_data, &kick_len, &kick_sample_rate);
-    read_data_file("pukkin-snare.dat", &snare_data, &snare_len, &snare_sample_rate);
+    size_t max_len = 500000;
+    read_data_file("pukkin-kick.dat", &kick_data, &kick_len, &kick_sample_rate, max_len);
+    read_data_file("pukkin-snare.dat", &snare_data, &snare_len, &snare_sample_rate, max_len);
     
     if (kick_sample_rate != snare_sample_rate) {
         fprintf(
