@@ -8,24 +8,20 @@ df = pd.read_csv(
     sys.argv[1],
     skiprows=1,
     #header=0,
-    names=["time", "kick", "snare", "kick_int","kick_schmidt", "snare_int", "snare_schmidt"],
+    names=["time", "kick", "snare", "kick_int", "snare_int", "kick_schmidt", "snare_schmidt"],
     index_col=False,
-    dtype=np.float64
+    #dtype=np.float64
 )
-
-print(df.columns)
-
 
 
 df['snare'] = df['snare'] + 1.0
-print(df['snare schmidt'])
 df['snare_int'] = df['snare_int'] + 1.0
 df['snare_schmidt'] = df['snare_schmidt'] + 1.0
  
 
 min_t = df['time'].min()
 max_t = df['time'].max()
-if len(sys.arg) > 2:
+if len(sys.argv) > 2:
     min_t = float(sys.argv[2])
     max_t = float(sys.argv[3])
 
@@ -48,7 +44,7 @@ df_melt = df[
 print("df melted")
 ax = sns.lineplot(
     data=df_melt,
-    x="Time",
+    x="time",
     y="Signal",
     hue="cols",
     errorbar=None

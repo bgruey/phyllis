@@ -101,7 +101,7 @@ void* pin_reader_test(void* args_in) {
 
     TimeWFloat_t sleep_data;
     sleep_data.start_time_seconds = get_now_seconds(&sleep_data);
-    double early_s;
+    // double early_s;
     for (data_i = 0; data_i < kick_len; data_i++) {
         if (args->run_bool != 1)
             break;
@@ -111,12 +111,12 @@ void* pin_reader_test(void* args_in) {
         // if (early_s > 0)
         //     sleep_via_double(early_s, &sleep_data.now);
 
+        for (pin_i = 0; pin_i < args->num_pins; pin_i++)
+            prev_pins[pin_i] = args->pins[pin_i];
+        
         args->pins[0] = (t += args->dt);
         args->pins[1] = kick_data[data_i];
         args->pins[2] = snare_data[data_i];
-
-        for (pin_i = 0; pin_i < args->num_pins; pin_i++)
-            prev_pins[pin_i] = args->pins[pin_i];
 
 
         for (pin_i = 0; pin_i < 2; pin_i++) {
