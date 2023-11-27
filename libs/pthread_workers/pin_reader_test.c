@@ -15,15 +15,21 @@
 #include "signal_processors.h"
 
 
-void read_data_file(const char* filename, double** buf, size_t* buf_len, size_t* sample_rate) {
+void read_data_file(
+    const char* filename, 
+    double** buf, 
+    size_t* buf_len, 
+    size_t* sample_rate
+) {
     FILE* f = fopen(filename, "rb");
 
-    fread(sample_rate, __SIZEOF_INT__, 1, f);
     fread(buf_len, __SIZEOF_INT__, 1, f);
+    fread(sample_rate, __SIZEOF_INT__, 1, f);
 
     buf[0] = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
     fread(buf, __SIZEOF_INT__, buf_len[0], f);
     fclose(f);
+    printf("Read %ld at %ld sample rate from %s\n.", *buf_len, *sample_rate, filename);
 }
 
 
@@ -44,11 +50,10 @@ void* pin_reader_test(void* args_in) {
     SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
     double* kick_data = NULL;
-    size_t kick_len = 0;
+    size_t kick_len, kick_sample_rate;
+
     double* snare_data = NULL;
-    size_t snare_len  = 0;
-    
-    size_t snare_sample_rate, kick_sample_rate;
+    size_t snare_len, snare_sample_rate;
 
     read_data_file("pukkin-kick.dat", &kick_data, &kick_len, &kick_sample_rate);
     read_data_file("pukkin-snare.dat", &snare_data, &snare_len, &snare_sample_rate);
