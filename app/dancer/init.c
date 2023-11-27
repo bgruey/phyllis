@@ -97,7 +97,7 @@ DancerState_t* initialize_dancer(
     dancer->pin_writer_thread_data = (PinThreadData_t*)calloc(1, sizeof(PinThreadData_t));
     dancer->pin_writer_thread_data->writer_pwm_data = (PWMData_t*)calloc(1, sizeof(PWMData_t));
     dancer->pin_writer_thread_data->writer_pwm_data->period_seconds = 0.02;
-    dancer->pin_writer_thread_data->writer_pwm_data->duty_cycle_percent = 0.25;
+    dancer->pin_writer_thread_data->writer_pwm_data->duty_cycle_percent = 0.34;
     dancer->pin_writer_thread_data->run_bool = 1;
 
     launch_pin_thread(
