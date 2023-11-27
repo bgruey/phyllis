@@ -2,22 +2,25 @@ import sys
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 df = pd.read_csv(
     sys.argv[1],
-    #header=None,
-    #names=["Time", "Kick In", "Snare In", "Kick Out","Kick Schmidt", "Snare Out", "Snare Schmidt"],
-    #index_col=False
+    skiprows=1,
+    #header=0,
+    names=["time", "kick", "snare", "kick_int","kick_schmidt", "snare_int", "snare_schmidt"],
+    index_col=False,
+    dtype=np.float64
 )
 
-print(df.head)
+print(df.columns)
 
 
 
-df[' snare'] = df[' snare'] + 1.0
-print(df[' snare schmidt'])
-df[' snare integral'] = df[' snare integral'] + 1.0
-df[' snare schmidt'] = df[' snare schmidt'] + 1.0
+df['snare'] = df['snare'] + 1.0
+print(df['snare schmidt'])
+df['snare_int'] = df['snare_int'] + 1.0
+df['snare_schmidt'] = df['snare_schmidt'] + 1.0
  
 
 min_t = df['time'].min()
