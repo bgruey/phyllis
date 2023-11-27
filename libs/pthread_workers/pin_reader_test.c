@@ -103,7 +103,7 @@ void* pin_reader_test(void* args_in) {
             break;
 
         early_s = t - get_now_seconds(&sleep_data);
-        printf("Sleeping for %f from %f to %f.\n", early_s, sleep_data.seconds, t);
+        //printf("Sleeping for %f from %f to %f.\n", early_s, sleep_data.seconds, t);
         if (early_s > 0)
             sleep_via_double(early_s, &sleep_data.now);
 
