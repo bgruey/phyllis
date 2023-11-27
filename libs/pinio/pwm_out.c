@@ -2,10 +2,7 @@
 #include "pinio.h"
 
 
-
-
 void run_pwm_on_pin(PWMData_t* pwm_data, int* run_bool, uint8_t pin) {
-    calc_sleep_times(pwm_data);
 
     while (run_bool[0]) {
         write_pin_high(pin);
