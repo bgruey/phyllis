@@ -50,7 +50,7 @@ void step_forward_buffer(DancerState_t* dancer) {
         to the current read pin state directly?
     */
 
-    get_now_seconds_fraction(dancer->now, 0.5);
+    dancer->now->start_time_seconds = get_now_seconds(dancer->now);
 
     dancer->next_buffer_i = (dancer->buffer_i + 1) % dancer->len_buffer;
     dancer->read_now = 1;
