@@ -120,10 +120,10 @@ void* pin_reader_test(void* args_in) {
 
         for (pin_i = 0; pin_i < 2; pin_i++) {
             args->pins[3 + pin_i] = shunted_integrator(
-                prev_pins[pin_i + 1],
+                prev_pins[pin_i + 3],
                 args->pins[pin_i + 1],
                 args->dt,
-                100.0  // lambda
+                20.0  // lambda
             );
             args->pins[5 + pin_i] = schmtt_calculate(
                 args->pins[3 + pin_i],
