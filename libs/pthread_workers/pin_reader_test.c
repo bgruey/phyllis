@@ -26,10 +26,10 @@ void read_data_file(
     fread(sample_rate, __SIZEOF_INT__, 1, f);
     fread(buf_len, __SIZEOF_INT__, 1, f);
     
-    buf[0] = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
-    fread(buf[0], __SIZEOF_INT__, buf_len[0], f);
+    buf[0] = (double*)calloc(buf_len[0], __SIZEOF_DOUBLE__);
+    fread(buf[0], __SIZEOF_DOUBLE__, buf_len[0], f);
     fclose(f);
-    printf("Read %ld at %ld sample rate from %s\n", *buf_len, *sample_rate, filename);
+    printf("Read %ld at %ld sample rate from %s\n", buf_len[0], sample_rate[0], filename);
 }
 
 
