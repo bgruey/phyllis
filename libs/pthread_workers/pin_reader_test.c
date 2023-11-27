@@ -23,9 +23,9 @@ void read_data_file(
 ) {
     FILE* f = fopen(filename, "rb");
 
-    fread(buf_len, __SIZEOF_INT__, 1, f);
     fread(sample_rate, __SIZEOF_INT__, 1, f);
-
+    fread(buf_len, __SIZEOF_INT__, 1, f);
+    
     buf[0] = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
     fread(buf, __SIZEOF_INT__, buf_len[0], f);
     fclose(f);
