@@ -46,9 +46,9 @@ void* pin_reader_test(void* args_in) {
     */   
 
     PinThreadData_t* args = (PinThreadData_t*)args_in;
-    pthread_mutex_lock(&args->read_now_mutex);
-    while(args->read_now == 1 && args->run_bool)
-        pthread_cond_wait(&args->read_now_cond, &args->read_now_mutex);
+    pthread_mutex_lock(args->read_now_mutex);
+    while(args->read_now[0] == 1 && args->run_bool)
+        pthread_cond_wait(args->read_now_cond, args->read_now_mutex);
 
     SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
@@ -94,8 +94,8 @@ void* pin_reader_test(void* args_in) {
     double early_s;
 
     int data_i, pin_i;
-    pthread_mutex_unlock(&args->read_now_mutex);
-    pthread_cond_signal(&args->read_now_cond);
+    pthread_mutex_unlock(args->read_now_mutex);
+    pthread_cond_signal(args->read_now_cond);
 
     for (data_i = 0; data_i < kick_len; data_i++) {
         if (args->run_bool != 1)
@@ -134,11 +134,12 @@ void* pin_reader_test(void* args_in) {
     args->run_bool = 0;
     FILE* outfile = fopen("test_out.dat", "rb");
     for (data_i = 0; data_i < kick_len; data_i++)
-        fprintf(
-            outfile,
-            "%f%f%f%f%f%f%f",
-            output_buffer[data_i]
-        );
+        for (pin_i = 0; pin_i < args->num_pins; pin_i++)
+            fprintf(
+                outfile,
+                "%f",
+                output_buffer[data_i][pin_i]
+            );
     fclose(outfile);
 
     return NULL;
