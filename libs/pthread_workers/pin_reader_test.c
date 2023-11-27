@@ -47,8 +47,6 @@ void* pin_reader_test(void* args_in) {
 
     PinThreadData_t* args = (PinThreadData_t*)args_in;
     pthread_mutex_lock(args->read_now_mutex);
-    while(args->read_now[0] == 1 && args->run_bool)
-        pthread_cond_wait(args->read_now_cond, args->read_now_mutex);
 
     SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
@@ -94,6 +92,7 @@ void* pin_reader_test(void* args_in) {
     double early_s;
 
     int data_i, pin_i;
+    args->read_now[0] = 1;
     pthread_mutex_unlock(args->read_now_mutex);
     pthread_cond_signal(args->read_now_cond);
 

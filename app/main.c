@@ -21,7 +21,7 @@
 int main(int argc, char** argv) {
     int num_points = 30000001;
     struct timespec* sleep_data = (struct  timespec*)calloc(1, sizeof(struct timespec));
-    system("mpg321 pukkin-drum-and-bass.mp3 &");
+    
     /*
         In testing, channel definitions:
             0: time
@@ -40,9 +40,11 @@ int main(int argc, char** argv) {
 
     int i = 0;
     pthread_mutex_lock(&dancer->read_now_mutex);
-    while(dancer->read_now == 1 && dancer->pin_reader_thread_data->run_bool)
+    while(dancer->read_now == 0)
         pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
     
+    system("mpg321 pukkin-drum-and-bass.mp3 2>&1 &");
+
     while (dancer->pin_reader_thread_data->run_bool && i < num_points) {
         step_forward_buffer(dancer);
 

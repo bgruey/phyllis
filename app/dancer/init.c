@@ -76,7 +76,7 @@ DancerState_t* initialize_dancer(
         explicitly joinable, mutex:
             https://hpc-tutorials.llnl.gov/posix/example_using_cond_vars/
     */
-    dancer->read_now = 1;
+    dancer->read_now = 0;
     pthread_mutex_init(&dancer->read_now_mutex, NULL);
     pthread_cond_init(&dancer->read_now_cond, NULL);
 
