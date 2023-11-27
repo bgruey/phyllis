@@ -144,14 +144,12 @@ void* pin_reader_test(void* args_in) {
     
     FILE* outfile = fopen("test_out.dat", "wb");
     for (data_i = 0; data_i < kick_len; data_i++)
-        for (pin_i = 0; pin_i < args->num_pins; pin_i++) {
-            printf("%d, %d\n", data_i, pin_i);
+        for (pin_i = 0; pin_i < args->num_pins; pin_i++) 
             fprintf(
                 outfile,
                 "%f",
                 output_buffer[data_i][pin_i]
             );
-        }
 
     fclose(outfile);
     args->run_bool = 0;
