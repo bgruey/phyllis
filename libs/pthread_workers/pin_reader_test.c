@@ -29,7 +29,7 @@ void read_data_file(
     buf[0] = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
     fread(buf, __SIZEOF_INT__, buf_len[0], f);
     fclose(f);
-    printf("Read %ld at %ld sample rate from %s\n.", *buf_len, *sample_rate, filename);
+    printf("Read %ld at %ld sample rate from %s\n", *buf_len, *sample_rate, filename);
 }
 
 
@@ -57,6 +57,7 @@ void* pin_reader_test(void* args_in) {
 
     read_data_file("pukkin-kick.dat", &kick_data, &kick_len, &kick_sample_rate);
     read_data_file("pukkin-snare.dat", &snare_data, &snare_len, &snare_sample_rate);
+    
     if (kick_sample_rate != snare_sample_rate) {
         fprintf(
             stderr, 
