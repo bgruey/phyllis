@@ -125,8 +125,15 @@ void* pin_reader_test(void* args_in) {
             );
         }
 
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < args->num_pins; i++) {
+            fprintf(
+                stderr,
+                "%d in %d: %f -> %f\n",
+                i, data_i, args->pins[i], output_buffer[data_i][i]
+            );
             output_buffer[data_i][i] = args->pins[i];
+        }
+            
 
     }
 
