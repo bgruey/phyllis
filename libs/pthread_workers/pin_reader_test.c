@@ -87,9 +87,7 @@ void* pin_reader_test(void* args_in) {
     double t = 0.0;
     double* prev_pins = (double*)calloc(args->num_pins, sizeof(double));
     
-    TimeWFloat_t sleep_data;
-    sleep_data.start_time_seconds = get_now_seconds(&sleep_data);
-    double early_s;
+    
 
     int data_i, pin_i;
     system("mpg321 pukkin-drum-and-bass.mp3 2>&1 > /dev/null &");
@@ -97,6 +95,9 @@ void* pin_reader_test(void* args_in) {
     pthread_mutex_unlock(args->read_now_mutex);
     pthread_cond_signal(args->read_now_cond);
 
+    TimeWFloat_t sleep_data;
+    sleep_data.start_time_seconds = get_now_seconds(&sleep_data);
+    double early_s;
     for (data_i = 0; data_i < kick_len; data_i++) {
         if (args->run_bool != 1)
             break;
