@@ -77,7 +77,7 @@ void* pin_reader_test(void* args_in) {
         );
         exit(EXIT_FAILURE);
     }
-    kick_len = 1000;
+
     double** output_buffer = (double**)calloc(kick_len, sizeof(double*));
     int i;
     for (i = 0; i < kick_len; i++)
