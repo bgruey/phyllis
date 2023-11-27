@@ -14,12 +14,9 @@
 typedef struct {
     // Input values
     double period_seconds;
-    double duty_cycle_percent;
-
-    // Calculated values
     double sleep_high;
-    double sleep_low;
 
+    // Sleep workspace
     TimeWFloat_t sleep_data;
 } PWMData_t;
 
