@@ -15,13 +15,13 @@
 #include "signal_processors.h"
 
 
-void read_data_file(const char* filename, double* buf, size_t* buf_len, size_t* sample_rate) {
+void read_data_file(const char* filename, double** buf, size_t* buf_len, size_t* sample_rate) {
     FILE* f = fopen(filename, "rb");
 
     fread(sample_rate, __SIZEOF_INT__, 1, f);
     fread(buf_len, __SIZEOF_INT__, 1, f);
 
-    buf = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
+    buf[0] = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
     fread(buf, __SIZEOF_INT__, buf_len[0], f);
     fclose(f);
 }
@@ -50,8 +50,8 @@ void* pin_reader_test(void* args_in) {
     
     size_t snare_sample_rate, kick_sample_rate;
 
-    read_data_file("pukkin-kick.dat", kick_data, &kick_len, &kick_sample_rate);
-    read_data_file("pukkin-snare.dat", snare_data, &snare_len, &snare_sample_rate);
+    read_data_file("pukkin-kick.dat", &kick_data, &kick_len, &kick_sample_rate);
+    read_data_file("pukkin-snare.dat", &snare_data, &snare_len, &snare_sample_rate);
     if (kick_sample_rate != snare_sample_rate) {
         fprintf(
             stderr, 
@@ -90,7 +90,7 @@ void* pin_reader_test(void* args_in) {
 
         args->pins[0] = (t += args->dt);
         args->pins[1] = kick_data[data_i];
-        args->pins[0] = snare_data[data_i];
+        args->pins[2] = snare_data[data_i];
 
         for (pin_i = 0; pin_i < args->num_pins; pin_i++)
             prev_pins[pin_i] = args->pins[pin_i];
