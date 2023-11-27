@@ -76,13 +76,13 @@ void step_forward_buffer(DancerState_t* dancer) {
     else
         dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
 
-    set_line_buffer_with_state(dancer);
-    // printf("%s\n", dancer->line_buffer);
-    fprintf(
-        dancer->outfile,
-        "%s\n",
-        dancer->line_buffer
-    );
+    // set_line_buffer_with_state(dancer);
+    // // printf("%s\n", dancer->line_buffer);
+    // fprintf(
+    //     dancer->outfile,
+    //     "%s\n",
+    //     dancer->line_buffer
+    // );
 
     dancer->buffer_i = dancer->next_buffer_i;
     // pthread_mutex_unlock(&dancer->read_now_mutex);  

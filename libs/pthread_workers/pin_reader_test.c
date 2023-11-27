@@ -77,6 +77,11 @@ void* pin_reader_test(void* args_in) {
         exit(EXIT_FAILURE);
     }
 
+    double** output_buffer = (double**)calloc(7, sizeof(double*));
+    int i;
+    for (i = 0; i < 7; i++)
+        output_buffer[i] = (double*)calloc(kick_len, __SIZEOF_DOUBLE__);
+
     args->dt = 1.0 / ((double)kick_sample_rate);
     double t = 0.0;
     double* prev_pins = (double*)calloc(args->num_pins, sizeof(double));
@@ -115,9 +120,20 @@ void* pin_reader_test(void* args_in) {
             );
         }
 
+        for (i = 0; i < 7; i++)
+            output_buffer[data_i][i] = args->pins[i];
+
     }
 
     args->run_bool = 0;
+    FILE* outfile = fopen("test_out.dat", "rb");
+    for (data_i = 0; data_i < kick_len; data_i++)
+        fprintf(
+            outfile,
+            "%f%f%f%f%f%f%f",
+            output_buffer[data_i]
+        );
+    fclose(outfile);
 
     return NULL;
 }
