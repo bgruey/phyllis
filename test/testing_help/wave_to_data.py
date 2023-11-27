@@ -43,6 +43,7 @@ def get_adc(fval):
 ofilename = "waveforms.dat" if len(sys.argv) < 2 else sys.argv[2]
 with open(ofilename, "wb") as f:
     f.write(struct.pack("i", sample_rate))
+    f.write(struct.pack("i", len(data)))
     for d in data:
         # print(d, get_adc(d))
         f.write(struct.pack("d", get_adc(d)))

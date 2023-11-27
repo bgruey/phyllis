@@ -10,6 +10,7 @@ valgrind-out.txt
 *.dat
 *.csv
 *.wav
+*.mp3
 # python env
 venv/
 # vs code

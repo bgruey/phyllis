@@ -15,46 +15,15 @@
 #include "signal_processors.h"
 
 
-size_t read_sample(
-    FILE* kick_file,
-    FILE* snare_file, 
-    double* pins,
-    double time
-) {
-    // current time
-    pins[0] = time;
+void read_data_file(const char* filename, double* buf, size_t* buf_len, int* sample_rate) {
+    FILE* f = fopen(filename, "rb");
 
-    // kick
-    size_t nread = fread(&pins[1], __SIZEOF_DOUBLE__, 1, kick_file);
-    if (nread != 1)
-        return 0;
+    fread(sample_rate, __SIZEOF_INT__, 1, f);
+    fread(buf_len, __SIZEOF_INT__, 1, f);
 
-    // snare
-    nread += fread(&pins[2], __SIZEOF_DOUBLE__, 1, snare_file);
-    if (nread != 2)
-        return 0;
-    //printf("%f: %f, %f\n", pins[0], pins[1], pins[2]);
-    return nread;
-}
-
-
-double get_timestep(FILE* kick, FILE* snare) {
-    int kick_sample_rate, snare_sameple_rate;
-    fread(&kick_sample_rate, __SIZEOF_INT__, 1, kick);
-    fread(&snare_sameple_rate, __SIZEOF_INT__, 1, snare);
-    if( kick_sample_rate != snare_sameple_rate) {
-        fprintf(
-            stderr, 
-            "ERROR: Sample rates mismatch in kick/snare (%d/%d)data!\n",
-            kick_sample_rate,
-            snare_sameple_rate
-        );
-        exit(EXIT_FAILURE);
-    }
-
-    double dt = 1.0 / ((double)kick_sample_rate);
-    printf("%f from %d, %d\n", dt, kick_sample_rate, snare_sameple_rate);
-    return dt;
+    buf = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
+    fread(buf, __SIZEOF_INT__, buf_len[0], f);
+    fclose(f);
 }
 
 
@@ -69,67 +38,76 @@ void* pin_reader_test(void* args_in) {
             5: kick Schmidt Trigger
             6: snare Schmidt Trigger
     */
-    int i = 0;
-    PinThreadData_t* args = (PinThreadData_t*)args_in;
-    double* prev_pins = (double*)calloc(args->num_pins, sizeof(double));
 
-    FILE* kick_file = fopen("pukkin-kick.dat", "rb");
-    FILE* snare_file = fopen("pukkin-snare.dat", "rb");
+    PinThreadData_t* args = (PinThreadData_t*)args_in;
 
     SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
-    args->dt = get_timestep(kick_file, snare_file);
+    double* kick_data = NULL;
+    size_t kick_len = 0;
+    double* snare_data = NULL;
+    size_t snare_len  = 0;
+    
+    size_t snare_sample_rate, kick_sample_rate;
+
+    read_data_file("pukkin-kick.dat", kick_data, &kick_len, &kick_sample_rate);
+    read_data_file("pukkin-snare.dat", snare_data, &snare_len, &snare_sample_rate);
+    if (kick_sample_rate != snare_sample_rate) {
+        fprintf(
+            stderr, 
+            "ERROR: Sample rates mismatch in kick/snare (%d/%d)data!\n",
+            kick_sample_rate,
+            snare_sample_rate
+        );
+        exit(EXIT_FAILURE);
+    }
+    if (kick_len != snare_len) {
+        fprintf(
+            stderr, 
+            "ERROR: Data length mismatch in kick/snare (%d/%d)data!\n",
+            kick_len,
+            snare_len
+        );
+        exit(EXIT_FAILURE);
+    }
+
+    args->dt = 1.0 / ((double)kick_sample_rate);
     double t = 0.0;
+    double* prev_pins = (double*)calloc(args->num_pins, sizeof(double));
+    
     TimeWFloat_t sleep_data;
     sleep_data.start_time_seconds = get_now_seconds(&sleep_data);
     double early_s;
 
-    size_t num_read = read_sample(kick_file, snare_file, args->pins, t);
-
-    while (args->run_bool && num_read == 2) {
+    int data_i, pin_i;
+    for (data_i = 0; data_i < kick_len; data_i++) {
+        if (args->run_bool != 1)
+            break;
 
         early_s = t - (sleep_data.seconds - sleep_data.start_time_seconds);
         if (early_s > 0)
             sleep_via_double(early_s, &sleep_data.now);
 
+        for (pin_i = 0; pin_i < args->num_pins; pin_i++)
+            prev_pins[pin_i] = args->pins[pin_i];
 
-        // pthread_mutex_lock(args->read_now_mutex);
 
-        // while(args->read_now[0] == 0 && args->run_bool)
-        //     pthread_cond_wait(args->read_now_cond, args->read_now_mutex);
-
-        for (i = 0; i < args->num_pins; i++)
-            prev_pins[i] = args->pins[i];
-
-        num_read = read_sample(
-            kick_file, 
-            snare_file, 
-            args->pins, 
-            t += args->dt
-        );
-
-        for (i = 0; i < 2; i++) {
-            args->pins[3 + i] = shunted_integrator(
-                prev_pins[i + 1],
-                args->pins[i + 1],
+        for (pin_i = 0; pin_i < 2; pin_i++) {
+            args->pins[3 + pin_i] = shunted_integrator(
+                prev_pins[pin_i + 1],
+                args->pins[pin_i + 1],
                 args->dt,
                 100.0  // lambda
             );
-            args->pins[5 + i] = schmtt_calculate(
-                args->pins[3 + i],
+            args->pins[5 + pin_i] = schmtt_calculate(
+                args->pins[3 + pin_i],
                 schmidt_data
             );
         }
-        
-        // args->read_now[0] = 0;
 
-        // pthread_mutex_unlock(args->read_now_mutex);
-        // pthread_cond_signal(args->read_now_cond);
     }
 
     args->run_bool = 0;
-    fclose(kick_file);
-    fclose(snare_file);
 
     return NULL;
 }
