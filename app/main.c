@@ -39,6 +39,10 @@ int main(int argc, char** argv) {
     );
 
     int i = 0;
+    pthread_mutex_lock(&dancer->read_now_mutex);
+    while(dancer->read_now == 1 && dancer->pin_reader_thread_data->run_bool)
+        pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
+    
     while (dancer->pin_reader_thread_data->run_bool && i < num_points) {
         step_forward_buffer(dancer);
 

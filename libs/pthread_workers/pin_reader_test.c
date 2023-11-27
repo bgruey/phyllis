@@ -43,9 +43,12 @@ void* pin_reader_test(void* args_in) {
             4: snare shinted integral
             5: kick Schmidt Trigger
             6: snare Schmidt Trigger
-    */
+    */   
 
     PinThreadData_t* args = (PinThreadData_t*)args_in;
+    pthread_mutex_lock(&args->read_now_mutex);
+    while(args->read_now == 1 && args->run_bool)
+        pthread_cond_wait(&args->read_now_cond, &args->read_now_mutex);
 
     SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
 
@@ -77,10 +80,10 @@ void* pin_reader_test(void* args_in) {
         exit(EXIT_FAILURE);
     }
 
-    double** output_buffer = (double**)calloc(7, sizeof(double*));
+    double** output_buffer = (double**)calloc(kick_len, sizeof(double*));
     int i;
-    for (i = 0; i < 7; i++)
-        output_buffer[i] = (double*)calloc(kick_len, __SIZEOF_DOUBLE__);
+    for (i = 0; i < args->num_pins; i++)
+        output_buffer[i] = (double*)calloc(args->num_pins, __SIZEOF_DOUBLE__);
 
     args->dt = 1.0 / ((double)kick_sample_rate);
     double t = 0.0;
@@ -91,6 +94,9 @@ void* pin_reader_test(void* args_in) {
     double early_s;
 
     int data_i, pin_i;
+    pthread_mutex_unlock(&args->read_now_mutex);
+    pthread_cond_signal(&args->read_now_cond);
+
     for (data_i = 0; data_i < kick_len; data_i++) {
         if (args->run_bool != 1)
             break;
