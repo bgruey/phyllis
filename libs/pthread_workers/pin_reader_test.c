@@ -94,7 +94,6 @@ void* pin_reader_test(void* args_in) {
     
 
     int data_i, pin_i;
-    system("mpg321 pukkin-drum-and-bass.mp3 2>&1 > /dev/null &");
     args->read_now[0] = 1;
     pthread_mutex_unlock(args->read_now_mutex);
     pthread_cond_signal(args->read_now_cond);
