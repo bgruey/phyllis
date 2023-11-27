@@ -92,6 +92,7 @@ void* pin_reader_test(void* args_in) {
     double early_s;
 
     int data_i, pin_i;
+    system("mpg321 pukkin-drum-and-bass.mp3 2>&1 > /dev/null &");
     args->read_now[0] = 1;
     pthread_mutex_unlock(args->read_now_mutex);
     pthread_cond_signal(args->read_now_cond);
@@ -100,7 +101,8 @@ void* pin_reader_test(void* args_in) {
         if (args->run_bool != 1)
             break;
 
-        early_s = t - (sleep_data.seconds - sleep_data.start_time_seconds);
+        early_s = t - get_now_seconds(&sleep_data);
+        printf("Sleeping for %f from %f to %f.\n", early_s, sleep_data.seconds, t);
         if (early_s > 0)
             sleep_via_double(early_s, &sleep_data.now);
 
@@ -137,7 +139,7 @@ void* pin_reader_test(void* args_in) {
 
     }
 
-    args->run_bool = 0;
+    
     FILE* outfile = fopen("test_out.dat", "rb");
     for (data_i = 0; data_i < kick_len; data_i++)
         for (pin_i = 0; pin_i < args->num_pins; pin_i++)
@@ -146,7 +148,8 @@ void* pin_reader_test(void* args_in) {
                 "%f",
                 output_buffer[data_i][pin_i]
             );
-    fclose(outfile);
 
+    fclose(outfile);
+    args->run_bool = 0;
     return NULL;
 }

@@ -24,7 +24,7 @@ int sleep_via_double(double sleep_s, struct timespec* ts) {
 
     int res;
     do {
-        res = nanosleep(ts, ts);
+        res = nanosleep(ts, NULL);
     } while (res && errno == EINTR);
 
     return res;
