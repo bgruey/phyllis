@@ -27,7 +27,7 @@ void read_data_file(
     fread(buf_len, __SIZEOF_INT__, 1, f);
     
     buf[0] = (double*)malloc(buf_len[0] * __SIZEOF_DOUBLE__);
-    fread(buf, __SIZEOF_INT__, buf_len[0], f);
+    fread(buf[0], __SIZEOF_INT__, buf_len[0], f);
     fclose(f);
     printf("Read %ld at %ld sample rate from %s\n", *buf_len, *sample_rate, filename);
 }
