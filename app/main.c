@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
             - Build python plotter instead of libreoffice calc
     */
     DancerState_t* dancer = initialize_dancer(
-        8, 2, 5,
+        7, 2, 5,
         "./data.csv"
     );
 

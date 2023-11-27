@@ -102,15 +102,14 @@ void* pin_reader_test(void* args_in) {
         if (args->run_bool != 1)
             break;
 
-        early_s = t - get_now_seconds(&sleep_data);
-        //printf("Sleeping for %f from %f to %f.\n", early_s, sleep_data.seconds, t);
-        if (early_s > 0)
-            sleep_via_double(early_s, &sleep_data.now);
+        // early_s = t - get_now_seconds(&sleep_data);
+        // //printf("Sleeping for %f from %f to %f.\n", early_s, sleep_data.seconds, t);
+        // if (early_s > 0)
+        //     sleep_via_double(early_s, &sleep_data.now);
 
         args->pins[0] = (t += args->dt);
-        args->pins[1] = sleep_data.seconds;
-        args->pins[2] = sleep_data.start_time_seconds;// kick_data[data_i];
-        args->pins[3] = snare_data[data_i];
+        args->pins[1] = kick_data[data_i];
+        args->pins[2] = snare_data[data_i];
 
         for (pin_i = 0; pin_i < args->num_pins; pin_i++)
             prev_pins[pin_i] = args->pins[pin_i];
@@ -145,7 +144,7 @@ void* pin_reader_test(void* args_in) {
     FILE* outfile = fopen("test_out.csv", "w");
     fprintf(
         outfile,
-        "time, slept dt, kick, snare, kick integral, snare integral, kick schmidt, snare schmidt\n"
+        "time, kick, snare, kick integral, snare integral, kick schmidt, snare schmidt\n"
     );
     for (data_i = 0; data_i < kick_len; data_i++) {
         for (pin_i = 0; pin_i < args->num_pins; pin_i++) 
