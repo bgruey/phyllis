@@ -80,7 +80,7 @@ void* pin_reader_test(void* args_in) {
 
     double** output_buffer = (double**)calloc(kick_len, sizeof(double*));
     int i;
-    for (i = 0; i < args->num_pins; i++)
+    for (i = 0; i < kick_len; i++)
         output_buffer[i] = (double*)calloc(args->num_pins, __SIZEOF_DOUBLE__);
 
     args->dt = 1.0 / ((double)kick_sample_rate);
@@ -126,11 +126,11 @@ void* pin_reader_test(void* args_in) {
         }
 
         for (i = 0; i < args->num_pins; i++) {
-            fprintf(
-                stderr,
-                "%d in %d: %f -> %f\n",
-                i, data_i, args->pins[i], output_buffer[data_i][i]
-            );
+            // fprintf(
+            //     stderr,
+            //     "%d in %d: %f -> %f\n",
+            //     data_i, i, args->pins[i], output_buffer[data_i][i]
+            // );
             output_buffer[data_i][i] = args->pins[i];
         }
             
