@@ -1,5 +1,5 @@
 /*
-    pin_writer.c
+    pin_reader.c
 
     Description for pin_writer.c
 
@@ -18,19 +18,20 @@
 #include "utils.h"
 
 
-void* pin_writer(void* args_in) {
+void* pin_reader(void* args_in) {
     uint8_t pin = 3;
     PinThreadData_t* args = (PinThreadData_t*)args_in;
-    PWMData_t* pwm_data = args->writer_pwm_data;
 
-    // initalize bcm2835 library and set pin4 to output.
+    // initalize bcm2835 library
     if(!bcm2835_init()) {
         fprintf(stderr, "Failed to init bcm2835.\n");
         exit(EXIT_FAILURE);
     }
-    bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_OUTP);
+    bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INPT);
+    bcm2835_gpio_set_pud(pin, BCM2835_GPIO_PUD_UP);
 
-    run_inverted_pwm_on_pin(pwm_data, &args->run_bool, pin);
+    while (args->run_bool) 
+        args->pins[0] = bcm2835_gpio_lev(pin);
     
     return NULL;
 }

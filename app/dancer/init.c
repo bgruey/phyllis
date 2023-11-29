@@ -87,14 +87,20 @@ DancerState_t* initialize_dancer(
         dancer,
         dancer->num_read_pins,
         dancer->read_pins,
-        pin_reader_test
+        pin_reader
     );
+
+    pthread_mutex_lock(&dancer->read_now_mutex);
+    while(dancer->read_now == 0)
+        pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
 
     dancer->pin_writer_thread_data = (PinThreadData_t*)calloc(1, sizeof(PinThreadData_t));
     dancer->pin_writer_thread_data->writer_pwm_data = (PWMData_t*)calloc(1, sizeof(PWMData_t));
     dancer->pin_writer_thread_data->writer_pwm_data->period_seconds = 0.010;
     dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
     dancer->pin_writer_thread_data->run_bool = 1;
+    dancer->pin_writer_thread_data->num_pins = dancer->num_write_pins;
+    dancer->pin_writer_thread_data->pins = dancer->write_pins;
 
     launch_pin_thread(
         &dancer->pthread_attr,

@@ -25,10 +25,11 @@ if len(sys.argv) > 2:
     min_t = float(sys.argv[2])
     max_t = float(sys.argv[3])
 
+print(df.head)
 df_melt = df[
     (min_t < df['time']) & (df['time'] < max_t)
-].iloc[1:].melt("time", var_name="cols", value_name="Signal")
- 
+].melt("time", var_name="cols", value_name="Signal")
+print(df_melt.head) 
 
 # if len(sys.argv) < 3:
 #     stch = None

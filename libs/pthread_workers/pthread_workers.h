@@ -30,7 +30,7 @@ typedef struct pin_thread_data_t {
 } PinThreadData_t;
 
 
-// void* pin_reader(void* args_in);
+void* pin_reader(void* args_in);
 void* pin_reader_test(void* args_in);
 void* pin_writer(void* args_in);
 

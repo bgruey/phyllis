@@ -6,6 +6,7 @@
 #include "utils.h"
 
 #define PIN4 RPI_GPIO_P1_07
+#define PIN3 RPI_GPIO_P1_05
 
 #define GPIO_HIGH 0x1
 #define GPIO_LOW 0x0

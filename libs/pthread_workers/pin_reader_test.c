@@ -20,14 +20,16 @@ void read_data_file(
     double** buf, 
     size_t* buf_len, 
     size_t* sample_rate,
-    size_t max_len
+    size_t len,
+    size_t offset_from_start
 ) {
     FILE* f = fopen(filename, "rb");
 
     fread(sample_rate, __SIZEOF_INT__, 1, f);
     fread(buf_len, __SIZEOF_INT__, 1, f);
-    if (buf_len[0] > max_len)
-        buf_len[0] = max_len;
+    fseek(f, offset_from_start * __SIZEOF_DOUBLE__, SEEK_CUR);
+    if (buf_len[0] > len)
+        buf_len[0] = len;
     
     buf[0] = (double*)calloc(buf_len[0], __SIZEOF_DOUBLE__);
     fread(buf[0], __SIZEOF_DOUBLE__, buf_len[0], f);
@@ -51,7 +53,9 @@ void* pin_reader_test(void* args_in) {
     PinThreadData_t* args = (PinThreadData_t*)args_in;
     pthread_mutex_lock(args->read_now_mutex);
 
-    SchmidtTrigger_T* schmidt_data = schmtt_init(0.4, 0.1, 0.4, 0.05);
+    SchmidtTrigger_T** schmidt_data = (SchmidtTrigger_T**)calloc(2, sizeof(SchmidtTrigger_T*));
+    schmidt_data[0] = schmtt_init(0.25, 0.1, 0.4, 0.05);
+    schmidt_data[1] = schmtt_init(0.2, 0.1, 0.4, 0.05);
 
     double* kick_data = NULL;
     size_t kick_len, kick_sample_rate;
@@ -59,9 +63,24 @@ void* pin_reader_test(void* args_in) {
     double* snare_data = NULL;
     size_t snare_len, snare_sample_rate;
 
-    size_t max_len = 500000;
-    read_data_file("pukkin-kick.dat", &kick_data, &kick_len, &kick_sample_rate, max_len);
-    read_data_file("pukkin-snare.dat", &snare_data, &snare_len, &snare_sample_rate, max_len);
+    size_t max_len = 200000;
+    size_t offset = 85000;
+    read_data_file(
+        "pukkin-kick.dat", 
+        &kick_data, 
+        &kick_len, 
+        &kick_sample_rate, 
+        max_len,
+        offset
+    );
+    read_data_file(
+        "pukkin-snare.dat", 
+        &snare_data, 
+        &snare_len, 
+        &snare_sample_rate, 
+        max_len,
+        offset
+    );
     
     if (kick_sample_rate != snare_sample_rate) {
         fprintf(
@@ -120,25 +139,28 @@ void* pin_reader_test(void* args_in) {
 
         for (pin_i = 0; pin_i < 2; pin_i++) {
             args->pins[3 + pin_i] = shunted_integrator(
-                prev_pins[pin_i + 3],
-                args->pins[pin_i + 1],
+                prev_pins[3 + pin_i],
+                args->pins[1 + pin_i],
                 args->dt,
-                20.0  // lambda
+                200.0  // lambda
             );
+
             args->pins[5 + pin_i] = schmtt_calculate(
                 args->pins[3 + pin_i],
-                schmidt_data
+                schmidt_data[pin_i]
             );
         }
 
+        // fprintf(stderr, "%d: ", data_i);
         for (i = 0; i < args->num_pins; i++) {
             // fprintf(
             //     stderr,
-            //     "%d in %d: %f -> %f\n",
-            //     data_i, i, args->pins[i], output_buffer[data_i][i]
+            //     " %f",
+            //     args->pins[i]
             // );
             output_buffer[data_i][i] = args->pins[i];
         }
+        // fprintf(stderr, "\n");
             
 
     }

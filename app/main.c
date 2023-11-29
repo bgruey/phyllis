@@ -34,14 +34,11 @@ int main(int argc, char** argv) {
             - Build python plotter instead of libreoffice calc
     */
     DancerState_t* dancer = initialize_dancer(
-        7, 2, 5,
+        1, 1, 128,
         "./data.csv"
     );
 
     int i = 0;
-    pthread_mutex_lock(&dancer->read_now_mutex);
-    while(dancer->read_now == 0)
-        pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
 
     while (dancer->pin_reader_thread_data->run_bool && i < num_points) {
         step_forward_buffer(dancer);
