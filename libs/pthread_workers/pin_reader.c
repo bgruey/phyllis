@@ -29,10 +29,15 @@ void* pin_reader(void* args_in) {
     }
     bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INPT);
     bcm2835_gpio_set_pud(pin, BCM2835_GPIO_PUD_UP);
-
+    
+    double last_val = 700;
     while (args->run_bool) {
-        args->pins[0] = bcm2835_gpio_lev(pin);
-        fprintf(stderr, "READ: %d\n", args->pins[0]);
+        args->pins[0] = (double)bcm2835_gpio_lev(pin);
+
+        if (args->pins[0] != last_val)
+            fprintf(stderr, "READ: %f\n", args->pins[0]);
+        
+        last_val = args->pins[0];
     }
         
     
