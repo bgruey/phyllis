@@ -19,7 +19,7 @@
 
 
 void* pin_reader(void* args_in) {
-    uint8_t pin = RPI_GPIO_P1_03;
+    uint8_t pin = RPI_GPIO_P1_07;
     PinThreadData_t* args = (PinThreadData_t*)args_in;
 
     // initalize bcm2835 library
@@ -29,7 +29,7 @@ void* pin_reader(void* args_in) {
     }
     bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INPT);
     bcm2835_gpio_set_pud(pin, BCM2835_GPIO_PUD_UP);
-    
+
     double last_val = 700;
     while (args->run_bool) {
         args->pins[0] = (double)bcm2835_gpio_lev(pin);
