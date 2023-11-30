@@ -19,7 +19,7 @@
 
 
 void* pin_writer(void* args_in) {
-    uint8_t pin = 3;
+    uint8_t pin = RPI_GPIO_P1_05;
     PinThreadData_t* args = (PinThreadData_t*)args_in;
     PWMData_t* pwm_data = args->writer_pwm_data;
 
