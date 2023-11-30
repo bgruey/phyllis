@@ -22,6 +22,7 @@ void* pin_reader(void* args_in) {
     uint8_t pin = RPI_GPIO_P1_07;
     PinThreadData_t* args = (PinThreadData_t*)args_in;
 
+    fprintf(stderr, "Starting pin_reader for pin %d.\n", pin);
     // initalize bcm2835 library
     if(!bcm2835_init()) {
         fprintf(stderr, "Failed to init bcm2835.\n");
