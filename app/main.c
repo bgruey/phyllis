@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 
     int i = 0;
 
+    fprintf(stderr, "Starting dancer loop.\n");
     while (dancer->pin_reader_thread_data->run_bool && i < num_points) {
         step_forward_buffer(dancer);
 
