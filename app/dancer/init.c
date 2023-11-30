@@ -83,6 +83,7 @@ DancerState_t* initialize_dancer(
     pthread_attr_init(&dancer->pthread_attr);
     pthread_attr_setdetachstate(&dancer->pthread_attr, PTHREAD_CREATE_JOINABLE);
 
+    fprintf(stderr, "Initializing pin reader.\n");
     dancer->pin_reader_thread_data = init_pin_thread(
         dancer,
         dancer->num_read_pins,
@@ -90,9 +91,9 @@ DancerState_t* initialize_dancer(
         pin_reader
     );
 
-    pthread_mutex_lock(&dancer->read_now_mutex);
-    while(dancer->read_now == 0)
-        pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
+    // pthread_mutex_lock(&dancer->read_now_mutex);
+    // while(dancer->read_now == 0)
+    //     pthread_cond_wait(&dancer->read_now_cond, &dancer->read_now_mutex);
 
     dancer->pin_writer_thread_data = (PinThreadData_t*)calloc(1, sizeof(PinThreadData_t));
     dancer->pin_writer_thread_data->writer_pwm_data = (PWMData_t*)calloc(1, sizeof(PWMData_t));
