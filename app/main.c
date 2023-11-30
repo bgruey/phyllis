@@ -44,9 +44,9 @@ int main(int argc, char** argv) {
     while (dancer->pin_reader_thread_data->run_bool && i < num_points) {
         step_forward_buffer(dancer);
 
-        // sleep_via_double(0.0005, sleep_data);
-        // if ((i % 10000) == 0)
-        //     printf("%d: now\n", i);
+        sleep_via_double(0.0005, sleep_data);
+        if ((i % 10000) == 0)
+            printf("%d: now\n", i);
         i += 1;
     }
 
