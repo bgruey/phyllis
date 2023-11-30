@@ -34,6 +34,6 @@ void write_pin_low(uint8_t pin);
  * @param run_bool 
  * @param pin 
  */
-void run_inverted_pwm_on_pin(PWMData_t* pwm_data, int run_bool, uint8_t pin);
+void run_inverted_pwm_on_pin(PWMData_t* pwm_data, int* run_bool, uint8_t pin);
 
 #endif

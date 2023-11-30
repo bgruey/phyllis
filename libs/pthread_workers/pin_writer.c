@@ -30,7 +30,7 @@ void* pin_writer(void* args_in) {
     }
     bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_OUTP);
 
-    run_inverted_pwm_on_pin(pwm_data, args->run_bool, pin);
+    run_inverted_pwm_on_pin(pwm_data, &args->run_bool, pin);
     
     return NULL;
 }

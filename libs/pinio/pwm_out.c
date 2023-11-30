@@ -2,7 +2,7 @@
 #include "pinio.h"
 
 
-void run_inverted_pwm_on_pin(PWMData_t* pwm_data, int run_bool, uint8_t pin) {
+void run_inverted_pwm_on_pin(PWMData_t* pwm_data, int* run_bool, uint8_t pin) {
     double sleep_high = pwm_data->sleep_high;
     fprintf(stderr, "Starting PWM with period %f\n", pwm_data->period_seconds);
     while (run_bool) {
