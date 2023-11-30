@@ -3,35 +3,40 @@
 
 default: build
 
-build: libpinio.so libpthread_workers.so libsignal_processors.so libutils.so
+debug: BUILD_TARGET = debug
+debug: build_all
+
+build: BUILD_TARGET = build
+build: build_all
+build_all: libpinio.so libpthread_workers.so libsignal_processors.so libutils.so
 >	@echo ""
 >	@echo "Finished building."
 
 libpinio.so: libutils.so libsignal_processors.so
 >   @echo ""
 >   @echo "Building $@"
->	$(MAKE) -C pinio
+>	$(MAKE) -C pinio $(BUILD_TARGET)
 >   mv pinio/$@ ./lib/$@
 >   cp pinio/*.h inc/
 
 libpthread_workers.so: libutils.so libsignal_processors.so
 >   @echo ""
 >   @echo "Building $@"
->	$(MAKE) -C pthread_workers
+>	$(MAKE) -C pthread_workers $(BUILD_TARGET)
 >   mv pthread_workers/$@ ./lib/$@
 >   cp pthread_workers/*.h inc/
 
 libsignal_processors.so: libutils.so
 >	@echo ""
 >   @echo "Building $@"
->   $(MAKE) -C signal_processors
+>   $(MAKE) -C signal_processors $(BUILD_TARGET)
 >   mv signal_processors/libsignal_processors.so lib/libsignal_processors.so
 >   cp signal_processors/*.h inc/
 
 libutils.so:
 >   @echo ""
 >   @echo "Building $@"
->   $(MAKE) -C ./utils
+>   $(MAKE) -C ./utils $(BUILD_TARGET)
 >   mv ./utils/libutils.so ./lib/libutils.so
 >   cp utils/*.h inc/
 

@@ -1,7 +1,9 @@
 # Build Puppet Program
 .RECIPEPREFIX = >
 CC=/usr/bin/gcc
-CFLAGS=-g -O0 -ggdb3 -Wall -I/usr/local/include -I../libs/inc
+BASE_CFLAGS=-Wall -I/usr/local/include -I../libs/inc
+#CFLAGS+=-g -O0 -ggdb3
+export CFLAGS
 LD=/usr/bin/ld
 LDFLAGS=-lm \
         -L/usr/local/lib -lbcm2835 \
@@ -9,7 +11,7 @@ LDFLAGS=-lm \
         -L./dancer -ldancer
 export LD_LIBRARY_PATH=../libs/lib:dancer
 
-default: test
+default: debug
 
 test: clean build 
 >	valgrind --leak-check=full \
@@ -20,7 +22,12 @@ test: clean build
                 --num-callers=10 \
                 ./puppet.x
 
-run: build
+debug: CFLAGS = -g -O0 -ggdb3 $(BASE_CFLAGS)
+debug: BUILD_TARGET = debug
+debug: test
+
+run: CFLAGS = $(BASE_CFLAGS)
+run: clean build
 >       ./puppet.x
 
 build: dancer 
@@ -29,12 +36,12 @@ build: dancer
 dancer: libs
 >       @echo ""
 >       @echo "Building dancer"
->       $(MAKE) -C dancer
+>       $(MAKE) -C dancer $(BUILD_TARGET)
 
 libs:
 >       @echo ""
 >       @echo "Building ../libs"
->       $(MAKE) -C ../libs
+>       $(MAKE) -C ../libs $(BUILD_TARGET)
 
 .PHONY: clean
 
