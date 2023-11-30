@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
         i += 1;
     }
 
-    fprintf(stderr, "Finished? %d\n", i);
+    fprintf(stderr, "Finished? %d, %d\n", i, dancer->pin_reader_thread_data->run_bool);
 
     destroy_dancer(dancer);
     free(sleep_data);
