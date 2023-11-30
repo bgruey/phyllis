@@ -35,8 +35,8 @@ void* pin_reader(void* args_in) {
     while (args->run_bool) {
         args->pins[0] = (double)bcm2835_gpio_lev(pin);
 
-        if (1)  // args->pins[0] != last_val )
-            fprintf(stderr, "READ: %f\n", args->pins[0]);
+        // if (1)  // args->pins[0] != last_val )
+        //     fprintf(stderr, "READ: %f\n", args->pins[0]);
         
         last_val = args->pins[0];
     }
