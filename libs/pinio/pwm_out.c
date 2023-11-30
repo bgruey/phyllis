@@ -14,8 +14,8 @@ void run_inverted_pwm_on_pin(PWMData_t* pwm_data, int run_bool, uint8_t pin) {
             pwm_data->period_seconds - sleep_high,
             &pwm_data->sleep_data.now
         );
-        if (sleep_high != pwm_data->sleep_high)
-            fprintf(stderr, "WRITE new sleep high value: %f\n", pwm_data->sleep_high);
+        // if (sleep_high != pwm_data->sleep_high)
+        //     fprintf(stderr, "WRITE new sleep high value: %f\n", pwm_data->sleep_high);
 
         sleep_high = pwm_data->sleep_high;
     }

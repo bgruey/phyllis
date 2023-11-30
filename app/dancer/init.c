@@ -97,7 +97,7 @@ DancerState_t* initialize_dancer(
 
     dancer->pin_writer_thread_data = (PinThreadData_t*)calloc(1, sizeof(PinThreadData_t));
     dancer->pin_writer_thread_data->writer_pwm_data = (PWMData_t*)calloc(1, sizeof(PWMData_t));
-    dancer->pin_writer_thread_data->writer_pwm_data->period_seconds = 1.0; //0.010;
+    dancer->pin_writer_thread_data->writer_pwm_data->period_seconds = 0.010;
     dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
     dancer->pin_writer_thread_data->run_bool = 1;
     dancer->pin_writer_thread_data->num_pins = dancer->num_write_pins;
