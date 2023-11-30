@@ -50,6 +50,7 @@ int main(int argc, char** argv) {
         i += 1;
     }
 
+    fprintf(stderr, "Finished? %d\n", i);
 
     destroy_dancer(dancer);
     free(sleep_data);
