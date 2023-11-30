@@ -74,7 +74,7 @@ void step_forward_buffer(DancerState_t* dancer) {
         // printf("Triggering gpio high!\n");
     }
     else
-        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.0015;
+        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.002;
 
     // set_line_buffer_with_state(dancer);
     // // printf("%s\n", dancer->line_buffer);
