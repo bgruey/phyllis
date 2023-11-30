@@ -19,7 +19,7 @@
 #include "sleep.h"
 
 int main(int argc, char** argv) {
-    int num_points = 3000000001;
+    int num_points = 300000001;
     struct timespec* sleep_data = (struct  timespec*)calloc(1, sizeof(struct timespec));
     
     /*
