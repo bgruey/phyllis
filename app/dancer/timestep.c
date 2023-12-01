@@ -75,8 +75,11 @@ void step_forward_buffer(DancerState_t* dancer) {
             dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
             fprintf(stderr, "High at %f\n", dancer->now->seconds);
         }
-        else
+        else{
             dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.002;
+            fprintf(stderr, "PWM set low at %f\n", dancer->now->seconds);
+        }
+            
     }
     
 
