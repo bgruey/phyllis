@@ -108,6 +108,6 @@ DancerState_t* initialize_dancer(
         dancer->pin_writer_thread_data,
         pin_writer
     );
-        
+    dancer->now->start_time_seconds = get_now_seconds(dancer->now);
     return dancer;
 }

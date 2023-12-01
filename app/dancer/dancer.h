@@ -52,6 +52,8 @@ typedef struct {
 
     PinThreadData_t* pin_reader_thread_data;
     PinThreadData_t* pin_writer_thread_data;
+
+    double pwm_on_s;
 } DancerState_t;
 
 

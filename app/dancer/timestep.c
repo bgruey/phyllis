@@ -50,7 +50,7 @@ void step_forward_buffer(DancerState_t* dancer) {
         to the current read pin state directly?
     */
 
-    dancer->now->start_time_seconds = get_now_seconds(dancer->now);
+    get_now_seconds(dancer->now);
 
     dancer->next_buffer_i = (dancer->buffer_i + 1) % dancer->len_buffer;
     dancer->read_now = 1;
@@ -69,12 +69,15 @@ void step_forward_buffer(DancerState_t* dancer) {
         );
     }
     //fprintf(stderr, "Timestep read pin: %f\n", dancer->read_pins[0]);
-    if(dancer->read_pins[0]) {  // Schmidt Trigger signal is 0.4 for high.
-        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.0015;
-        // printf("Triggering gpio high!\n");
+    if(dancer->now->seconds - dancer->pwm_on_s > 0.1) {  // Leave on
+        if (dancer->read_pins[0] > 0.0) {
+            dancer->pwm_on_s = get_now_seconds(dancer->now);
+            dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.0015;
+        }
+        else
+            dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
     }
-    else
-        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.0015;
+    
 
     // set_line_buffer_with_state(dancer);
     // // printf("%s\n", dancer->line_buffer);

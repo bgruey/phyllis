@@ -17,7 +17,7 @@ typedef struct {
     double period_seconds;
     double sleep_high;
 
-    // Sleep workspace
+    // Workspace
     TimeWFloat_t sleep_data;
 } PWMData_t;
 
