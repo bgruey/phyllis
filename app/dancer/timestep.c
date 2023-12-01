@@ -72,7 +72,7 @@ void step_forward_buffer(DancerState_t* dancer) {
     if(dancer->now->seconds - dancer->pwm_on_s > .20) {  // Leave on
         // fprintf(stderr, "Read pin at: %f\n", dancer->read_pins[0]);
         if (!dancer->read_pins[0]) {
-            dancer->pwm_on_s = get_now_seconds(dancer->now);
+            dancer->pwm_on_s = dancer->now->seconds;
             dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
             fprintf(stderr, "On at %f\n", dancer->now->seconds);
         }
