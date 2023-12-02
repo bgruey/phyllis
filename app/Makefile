@@ -6,8 +6,7 @@ BASE_CFLAGS=-Wall -I/usr/local/include -I../libs/inc
 export CFLAGS
 LD=/usr/bin/ld
 LDFLAGS=-lm \
-        -L/usr/local/lib -lbcm2835 \
-        -L../libs/lib -lpinio -lpthread_workers -lsignal_processors -lutils \
+        -L../libs/lib -lbcm2835 -lpinio -lpthread_workers -lsignal_processors -lutils \
         -L./dancer -ldancer
 export LD_LIBRARY_PATH=../libs/lib:dancer
 
