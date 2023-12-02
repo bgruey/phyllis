@@ -8,7 +8,7 @@ debug: build_all
 
 build: BUILD_TARGET = build
 build: build_all
-build_all: libpinio.so libpthread_workers.so libsignal_processors.so libutils.so
+build_all: libpinio.so libpthread_workers.so libsignal_processors.so libutils.so libbcm2835.so
 >	@echo ""
 >	@echo "Finished building."
 
