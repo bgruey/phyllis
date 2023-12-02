@@ -40,6 +40,13 @@ libutils.so:
 >   mv ./utils/libutils.so ./lib/libutils.so
 >   cp utils/*.h inc/
 
+libbcm2835.so:
+>   @echo ""
+>   @echo "Building $@"
+>   $(MAKE) -C ./bcm2835 $(BUILD_TARGET)
+>   mv ./bcm2835/libbcm2835.so ./lib/libbcm2835.so
+>   cp bcm2835/*.h inc/
+
 .PHONY: clean
 clean:
 >	rm -f inc/* lib/*
