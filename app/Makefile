@@ -54,6 +54,3 @@ clean:
 >	rm -f *.x
 >	$(MAKE) clean -C ../libs
 >	$(MAKE) clean -C dancer
->       cp ~/libbcm2835.so ../libs/lib
->       cp ~/bcm2835.h ../libs/inc
-
