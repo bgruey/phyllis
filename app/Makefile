@@ -33,6 +33,10 @@ run: clean build
 build: dancer 
 >	$(CC) $(CFLAGS) -o puppet.x main.c $(LDFLAGS)
 
+install: clean build 
+>       cp ../libs/lib/* /usr/local/lib/
+>       cp puppet.x /usr/local/bin
+
 dancer: libs
 >       @echo ""
 >       @echo "Building dancer"
