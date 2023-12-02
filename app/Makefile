@@ -33,6 +33,7 @@ run: clean build
 build: dancer 
 >	$(CC) $(CFLAGS) -o puppet.x main.c $(LDFLAGS)
 
+install: CFLAGS = $(BASE_CFLAGS)
 install: clean build 
 >       cp ../libs/lib/* /usr/local/lib/
 >       cp puppet.x /usr/local/bin
