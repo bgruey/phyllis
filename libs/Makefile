@@ -12,14 +12,14 @@ build_all: libpinio.so libpthread_workers.so libsignal_processors.so libutils.so
 >	@echo ""
 >	@echo "Finished building."
 
-libpinio.so: libutils.so libsignal_processors.so
+libpinio.so: libbcm2835.so libutils.so libsignal_processors.so
 >   @echo ""
 >   @echo "Building $@"
 >	$(MAKE) -C pinio $(BUILD_TARGET)
 >   mv pinio/$@ ./lib/$@
 >   cp pinio/*.h inc/
 
-libpthread_workers.so: libutils.so libsignal_processors.so
+libpthread_workers.so: libbcm2835.so libutils.so libsignal_processors.so
 >   @echo ""
 >   @echo "Building $@"
 >	$(MAKE) -C pthread_workers $(BUILD_TARGET)
