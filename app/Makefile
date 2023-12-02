@@ -35,6 +35,7 @@ build: dancer
 install: CFLAGS = $(BASE_CFLAGS)
 install: clean build 
 >       cp ../libs/lib/* /usr/local/lib/
+>       pc dancer/libdancer.so /usr/local/lib
 >       cp puppet.x /usr/local/bin
 
 dancer: libs
