@@ -26,8 +26,8 @@ debug: BUILD_TARGET = debug
 debug: test
 
 run: CFLAGS = $(BASE_CFLAGS)
-run: clean build
->       ./puppet.x
+run: install
+>       puppet.x
 
 build: dancer 
 >	$(CC) $(CFLAGS) -o puppet.x main.c $(LDFLAGS)
