@@ -25,6 +25,7 @@
 
 typedef struct {
     TimeWFloat_t* now;
+    TimeWFloat_t* sleep_data;
     double start_time_seconds;
 
     unsigned short num_read_pins;
@@ -67,6 +68,8 @@ DancerState_t* initialize_dancer(
 void destroy_dancer(DancerState_t* dancer);
 
 void step_forward_buffer(DancerState_t* dancer);
+
+void startup_actions(DancerState_t* dancer);
 
 
 // Low level access functions

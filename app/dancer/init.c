@@ -51,6 +51,7 @@ DancerState_t* initialize_dancer(
     DancerState_t* dancer = (DancerState_t*)calloc(1, sizeof(DancerState_t));
 
     dancer->now = (TimeWFloat_t*)calloc(1, sizeof(TimeWFloat_t));
+    dancer->sleep_data = (TimeWFloat_t*)calloc(1, sizeof(TimeWFloat_t));
     dancer->num_read_pins = num_read_pins;
     dancer->num_write_pins = num_write_pins;
     dancer->len_buffer = len_buffer;
