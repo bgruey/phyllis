@@ -14,6 +14,7 @@
 void startup_actions(DancerState_t* dancer) {
     int i;
     for (i = 0; i < 5; i++) {
+        fprintf(stderr, "Start loop %d\n", i);
         dancer->read_pins[0] = 0.0015;
         sleep_via_double(0.75, dancer->sleep_data);
         dancer->read_pins[0] = 0.002;

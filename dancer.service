@@ -3,7 +3,7 @@ Description=Start Dancer program on start.
 After=multi-user.target
 
 [Service]
-ExecStart=/usr/local/bin/puppet.x
+ExecStart=nohup /usr/local/bin/puppet.x > /var/log/puppet.log 2>&1 & 
 
 [Install]
 WantedBy=multi-user.target

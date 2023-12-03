@@ -37,6 +37,10 @@ install: clean build
 >       cp ../libs/lib/* /usr/local/lib/
 >       cp dancer/libdancer.so /usr/local/lib
 >       cp puppet.x /usr/local/bin
+>       cp ../dancer.service /lib/systemd/system/
+>       sudo systemctl daemon-reload
+>       sudo systemctl enable dancer.service
+>       sudo systemctl start dancer.service 
 
 dancer: libs
 >       @echo ""
