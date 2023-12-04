@@ -16,11 +16,11 @@ void startup_actions(DancerState_t* dancer) {
     int i;
     for (i = 0; i < 5; i++) {
         fprintf(stderr, "Start loop %d\n", i);
-        dancer->write_pins[0] = 0.0015;
+        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.0015;
         sleep_via_double(1, &dancer->sleep_data->now);
-        dancer->write_pins[0] = 0.001;
+        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.001;
         sleep_via_double(1, &dancer->sleep_data->now);
-        dancer->write_pins[0] = 0.002;
+        dancer->pin_writer_thread_data->writer_pwm_data->sleep_high = 0.002;
         sleep_via_double(1, &dancer->sleep_data->now);
     }
 }
