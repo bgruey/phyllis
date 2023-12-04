@@ -21,6 +21,7 @@
 void* pin_reader(void* args_in) {
     uint8_t pin = RPI_GPIO_P1_07;
     PinThreadData_t* args = (PinThreadData_t*)args_in;
+    TimeWFloat_t sleep_data;
 
     fprintf(stderr, "Starting pin_reader for pin %d.\n", pin);
     // initalize bcm2835 library
@@ -39,6 +40,7 @@ void* pin_reader(void* args_in) {
         // fprintf(stderr, "READ: %f\n", args->pins[0]);
         
         last_val = args->pins[0];
+        sleep_via_double(0.0001, &sleep_data.now)
     }
     
     return NULL;
