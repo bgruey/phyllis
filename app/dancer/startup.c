@@ -12,6 +12,7 @@
 #include "dancer.h"
 
 void startup_actions(DancerState_t* dancer) {
+    fprintf(stderr, "Startup Actions.\n");
     int i;
     for (i = 0; i < 5; i++) {
         fprintf(stderr, "Start loop %d\n", i);
