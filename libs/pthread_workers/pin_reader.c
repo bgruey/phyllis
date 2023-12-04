@@ -40,7 +40,7 @@ void* pin_reader(void* args_in) {
         // fprintf(stderr, "READ: %f\n", args->pins[0]);
         
         last_val = args->pins[0];
-        sleep_via_double(0.0001, &sleep_data.now)
+        sleep_via_double(0.0001, &sleep_data.now);
     }
     
     return NULL;
