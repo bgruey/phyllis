@@ -1,3 +1,23 @@
+# Folders for build
+libs/lib
+libs/inc
+
+# executables
+*.x
+# valgrind output
+valgrind-out.txt
+# data files
+*.dat
+*.csv
+*.wav
+*.mp3
+# python env
+venv/
+# vs code
+.vscode
+
+
+
 # Prerequisites
 *.d
 
